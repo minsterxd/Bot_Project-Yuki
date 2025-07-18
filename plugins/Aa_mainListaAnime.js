@@ -96,9 +96,9 @@ let handler = async (m, { conn, args }) => {
 
 }
 
-handler.help = ['menu']
+handler.help = ['listaanime']
 handler.tags = ['main']
-handler.command = ['ListaAnime']
+handler.command = ['listaanime']
 
 export default handler
 
