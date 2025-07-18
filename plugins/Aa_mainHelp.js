@@ -21,16 +21,6 @@ let handler = async (m, { conn, args }) => {
               newsletterName: channelRD.name,
               serverMessageId: -1,
           },
-          forwardingScore: 999,
-          externalAdReply: {
-              title: botname,
-              body: textbot,
-              thumbnailUrl: banner,
-              sourceUrl: redes,
-              mediaType: 1,
-              showAdAttribution: true,
-              renderLargerThumbnail: true,
-          },
       },
   }, { quoted: m })
 
