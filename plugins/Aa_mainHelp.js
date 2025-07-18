@@ -8,7 +8,44 @@ let handler = async (m, { conn, args }) => {
     let totalCommands = Object.values(global.plugins).filter((v) => v.help && v.tags).length
     
     let txt = `
- *Todavía no está listo esto ;)* 
+  Hola! Soy *${botname}* (｡•̀ᴗ-)✧
+Aquí tienes la lista de comandos
+╭┈ ↷
+│ᰔᩚ Cliente » @${userId.split('@')[0]}
+│❀ Modo » Publico
+│✦ Bot » ${(conn.user.jid == global.conn.user.jid ? 'Principal 🅥' : 'Prem Bot 🅑')}
+│ⴵ Activada » ${uptime}
+│✰ Usuarios » ${totalreg}
+│✧ Comandos » ${totalCommands}
+│🜸 Baileys » Multi Device
+╰─────────────────
+Crea un *Sub-Bot* con tu número utilizando *#qr* o *#code*
+
+• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
+
+❍ Categorías:
+ᰔᩚ *#ListaInfo*
+> ✦ Comandos para ver el estado e información de la bot.
+ᰔᩚ *#ListaBuscadores*
+> ✦ Comandos para realizar búsquedas en distintas plataformas.
+ᰔᩚ *#ListaDescargas*
+> ✦ Comandos de descargas para varios archivos.
+ᰔᩚ *#ListaEco*
+> ✦ Comandos de economía y rpg para ganar dinero y otros recursos.
+ᰔᩚ *#ListaGacha*
+> ✦ Comandos de gacha para reclamar y colecciónar personajes.
+ᰔᩚ *#ListaStickers*
+> ✦ Comandos para creaciones de stickers, etc.
+ᰔᩚ *#ListaTools*
+> ✦ Comandos de herramientas con muchas funciones.
+ᰔᩚ *#ListaPerfil*
+> ✦ Comandos de perfil para ver, configurar y comprobar estados de tu perfil.
+ᰔᩚ *#ListaGrupos*
+> ✦ Comandos de grupos para una mejor gestión de ellos.
+ᰔᩚ *#ListaAnime*
+> ✦ Comandos de reacciones de anime.
+ᰔᩚ *#ListaJuegos*
+> ✦ Comandos de juegos para jugar con tus amigos.
   `.trim()
 
   await conn.sendMessage(m.chat, { 
