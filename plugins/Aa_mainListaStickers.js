@@ -46,9 +46,9 @@ let handler = async (m, { conn, args }) => {
 
 }
 
-handler.help = ['menu']
+handler.help = ['listastickers']
 handler.tags = ['main']
-handler.command = ['ListaStickers']
+handler.command = ['listastickers']
 
 export default handler
 
