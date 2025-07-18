@@ -70,9 +70,9 @@ let handler = async (m, { conn, args }) => {
 
 }
 
-handler.help = ['menu']
+handler.help = ['listansfw']
 handler.tags = ['main']
-handler.command = ['ListaNsfw']
+handler.command = ['listansfw']
 
 export default handler
 
