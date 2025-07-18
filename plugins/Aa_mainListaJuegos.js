@@ -92,9 +92,9 @@ let handler = async (m, { conn, args }) => {
 
 }
 
-handler.help = ['menu']
+handler.help = ['listajuegos']
 handler.tags = ['main']
-handler.command = ['ListaJuegos']
+handler.command = ['listajuegos']
 
 export default handler
 
