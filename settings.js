@@ -11,22 +11,13 @@ import moment from 'moment-timezone'
 
 //BETA: Si quiere evitar escribir el número que será bot en la consola, agregué desde aquí entonces:
 //Sólo aplica para opción 2 (ser bot con código de texto de 8 digitos)
-global.botNumber = '' //Ejemplo: 573218138672
+global.botNumber = '5493743560102' //Ejemplo: 573218138672
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.owner = [
 // <-- Número @s.whatsapp.net -->
-  ['5212202410659', '🜲 Propietario 🜲', true],
-  ['5492916450307'],
-  ['5219541690054'],
-  ['5214811527445'], 
-  ['5216671548329'],
-  
-// <-- Número @lid -->
-  ['117094280605916', 'Destroy', true],
-  ['258892692984006', 'DevAlexJs', true], 
-  ['58566677377081', 'Legna', true]
+  ['5493743598594', '🜲 Propietario 🜲', true],
 ];
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
@@ -66,11 +57,11 @@ global.avatar = 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/ma
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.gp1 = 'https://chat.whatsapp.com/LrEuqWCkkjBIuNIHqC8UjB?mode=r_c'
-global.comunidad1 = 'https://chat.whatsapp.com/I0dMp2fEle7L6RaWBmwlAa'
-global.channel = 'https://whatsapp.com/channel/0029VbAfPu9BqbrEMFWXKE0d'
-global.channel2 = 'https://whatsapp.com/channel/0029VbAfPu9BqbrEMFWXKE0d'
-global.md = 'https://github.com/The-King-Destroy/Yuki_Suou-Bot'
+global.gp1 = ''
+global.comunidad1 = ''
+global.channel = ''
+global.channel2 = ''
+global.md = ''
 global.correo = 'thekingdestroy507@gmail.com'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
