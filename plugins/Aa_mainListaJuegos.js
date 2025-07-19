@@ -13,8 +13,6 @@ let handler = async (m, { conn, args }) => {
 ❍ Comandos de juegos para jugar con tus amigos.
 ᰔᩚ *#amistad • #amigorandom* 
 > ✦ hacer amigos con un juego. 
-ᰔᩚ *#chaqueta • #jalamela*
-> ✦ Hacerte una chaqueta.
 ᰔᩚ *#chiste*
 > ✦ La bot te cuenta un chiste.
 ᰔᩚ *#consejo* 
@@ -29,10 +27,7 @@ let handler = async (m, { conn, args }) => {
 > ✦ Forma 5 parejas diferentes.
 ᰔᩚ *#frase*
 > ✦ La bot te da una frase.
-ᰔᩚ *#huevo*
-> ✦ Agarrale el huevo a alguien.
-ᰔᩚ *#chupalo* + <mencion>
-> ✦ Hacer que un usuario te la chupe.
+
 ᰔᩚ *#aplauso* + <mencion>
 > ✦ Aplaudirle a alguien.
 ᰔᩚ *#marron* + <mencion>
@@ -46,9 +41,7 @@ let handler = async (m, { conn, args }) => {
 ᰔᩚ *#morse*
 > ✦ Convierte un texto a codigo morse. 
 ᰔᩚ *#nombreninja*
-> ✦ Busca un nombre ninja aleatorio. 
-ᰔᩚ *#paja • #pajeame* 
-> ✦ La bot te hace una paja.
+> ✦ Busca un nombre ninja aleatorio.
 ᰔᩚ *#personalidad* + <mencion>
 > ✦ La bot busca tu personalidad. 
 ᰔᩚ *#piropo*
@@ -61,8 +54,6 @@ let handler = async (m, { conn, args }) => {
 > ✦ Empieza un sorteo. 
 ᰔᩚ *#top*
 > ✦ Empieza un top de personas.
-ᰔᩚ *#formartrio* + <mencion>
-> ✦ Forma un trio.
 ᰔᩚ *#ahorcado*
 > ✦ Diviertete con la bot jugando el juego ahorcado.
 ᰔᩚ *#mates • #matematicas*
