@@ -4,11 +4,16 @@ import { promises as fs } from 'fs';
 let handler = async (m, { conn, usedPrefix }) => {
     m.react("🍂");
     let name = await conn.getName(m.sender);
-    if (!global.menutext) {
-      await global.menu();
-    }
-    let cap = global.menutext;
-    let txt = `🍄 ${ucapan()}, @${m.sender.split("@")[0]} !\n\n${cap}`;
+    let txt = `🍄 ${ucapan()}, @${m.sender.split("@")[0]} !
+
+╭━━〔 𝙈𝙀𝙉𝙐 𝙋𝙍𝙄𝙉𝘾𝙄𝙋𝘼𝙇 〕━━⬣
+│🧸 *#sticker* - Crear sticker
+│🎵 *#play* - Descargar canción
+│📸 *#imagen* - Buscar imagen
+│💬 *#ai* - Hablar con la IA
+╰━━━━━━━━━━━━━━⬣
+`;
+let mention = conn.parseMention(txt);
     let mention = conn.parseMention(txt)
 try {
 const image = await Jimp.read("./src/doc_image.jpg");
@@ -134,6 +139,5 @@ global.menu = async function getMenu() {
     }
   }
   text += `\`${footer}\``;
-  "Hola!" = text;
-  global.menutext = "Hola!"
+  global.menutext = text;
 };
