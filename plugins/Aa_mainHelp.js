@@ -1,6 +1,14 @@
 import Jimp from "jimp";
 import { promises as fs } from 'fs';
 
+let handler = async (m, { conn, args }) => {
+    let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+    let user = global.db.data.users[userId]
+    let name = conn.getName(userId)
+    let _uptime = process.uptime() * 1000
+    let uptime = clockString(_uptime)
+    let totalreg = Object.keys(global.db.data.users).length
+    let totalCommands = Object.values(global.plugins).filter((v) => v.help && v.tags).length
 let handler = async (m, { conn, usedPrefix }) => {
     m.react("🍂");
     let name = await conn.getName(m.sender);
@@ -110,4 +118,11 @@ global.style = async function styles(text, style = 1) {
     find ? output.push(find.convert) : output.push(v);
   });
   return output.join("");
+};
+
+function clockString(ms) {
+    let seconds = Math.floor((ms / 1000) % 60)
+    let minutes = Math.floor((ms / (1000 * 60)) % 60)
+    let hours = Math.floor((ms / (1000 * 60 * 60)) % 24)
+    return `${hours}h ${minutes}m ${seconds}s`
 };
