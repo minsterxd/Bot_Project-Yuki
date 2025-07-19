@@ -14,7 +14,6 @@ let handler = async (m, { conn, usedPrefix }) => {
 ╰━━━━━━━━━━━━━━⬣
 `;
 let mention = conn.parseMention(txt);
-    let mention = conn.parseMention(txt)
 try {
 const image = await Jimp.read("./src/doc_image.jpg");
     image.resize(400, 400);
@@ -51,7 +50,6 @@ let img = await fs.readFile("./src/menu.jpg");
   conn.reply(m.chat, txt, m, { mentions: mention })
     conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
   }
-await global.menu();
 };
 handler.command = ["menu", "help", "menú", "commands", "comandos", "?"];
 export default handler;
