@@ -57,7 +57,7 @@ let img = await fs.readFile("./src/menu.jpg");
       m.chat,
       {
         document: img,
-        fileName: "ѕуℓρнιєттє'ѕ",
+        fileName: "${botname",
         mimetype: "image/png",
         caption: txt,
         fileLength: 1900,
