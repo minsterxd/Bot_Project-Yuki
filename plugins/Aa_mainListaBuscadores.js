@@ -29,14 +29,6 @@ let handler = async (m, { conn, args }) => {
 > ✦ buscador de imagenes de Google.
 ᰔᩚ *#infoanime*
 > ✦ Buscador de información de anime/manga.
-ᰔᩚ *#hentaisearch • #searchhentai*
-> ✦ Buscador de capítulos hentai.
-ᰔᩚ #xnxxsearch • #xnxxs*
-> ✦ Buscador de vídeos de Xnxx.
-ᰔᩚ *#xvsearch • #xvideossearch*
-> ✦ Buscador de vídeos de Xvideos.
-ᰔᩚ *#pornhubsearch • #phsearch*
-> ✦ Buscador de videos de Pornhub.
 ᰔᩚ *#npmjs*
 > ✦ Buscandor de npmjs.
   `.trim()
