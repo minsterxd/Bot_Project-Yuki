@@ -1,7 +1,7 @@
 import Jimp from "jimp";
 import { promises as fs } from 'fs';
 
-let handler = async (m, { conn, args }) => {
+let handler = async (m, { conn, usedPrefix, args }) => {
     let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
     let user = global.db.data.users[userId]
     let name = conn.getName(userId)
@@ -9,7 +9,6 @@ let handler = async (m, { conn, args }) => {
     let uptime = clockString(_uptime)
     let totalreg = Object.keys(global.db.data.users).length
     let totalCommands = Object.values(global.plugins).filter((v) => v.help && v.tags).length
-let handler = async (m, { conn, usedPrefix }) => {
     m.react("🍂");
     let name = await conn.getName(m.sender);
     let txt = `🍄 ${ucapan()}, @${m.sender.split("@")[0]} !
