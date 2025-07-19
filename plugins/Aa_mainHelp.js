@@ -10,11 +10,12 @@ let handler = async (m, { conn, usedPrefix }) => {
     let cap = global.menutext;
     let txt = `🍄 ${ucapan()}, @${m.sender.split("@")[0]} !\n\n${cap}`;
     let mention = conn.parseMention(txt)
-try {
-let imager = await sharp('./src/doc_image.jpg')
-  .resize(400, 400)
-  .toBuffer();
-let img = await fs.readFile("./src/menu.jpg");
+  try {
+    const image = await Jimp.read("./src/doc_image.jpg");
+    image.resize(400, 400);
+    const imager = await image.getBufferAsync(Jimp.MIME_JPEG); // formato jpeg
+
+    let img = await fs.readFile("./src/menu.jpg");
  await conn.sendMessage(
       m.chat,
       {
