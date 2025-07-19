@@ -135,4 +135,5 @@ global.menu = async function getMenu() {
   }
   text += `\`${footer}\``;
   "Hola!" = text;
+  global.menutext = "Hola!"
 };
