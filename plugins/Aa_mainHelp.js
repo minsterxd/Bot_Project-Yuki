@@ -1,4 +1,4 @@
-import sharp from "sharp";
+import sharp from "canvas";
 import { promises as fs } from 'fs';
 
 let handler = async (m, { conn, usedPrefix }) => {
