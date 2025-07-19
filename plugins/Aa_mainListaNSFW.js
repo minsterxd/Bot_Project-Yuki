@@ -53,6 +53,28 @@ let handler = async (m, { conn, args }) => {
 > ✦ Desnudar a alguien
 ᰔᩚ *#yuri • #tijeras* + <mencion>
 > ✦ Hacer tijeras.
+ᰔᩚ *#formartrio* + <mencion>
+> ✦ Forma un trio.
+ᰔᩚ *#huevo*
+> ✦ Agarrale el huevo a alguien.
+ᰔᩚ *#chupalo* + <mencion>
+> ✦ Hacer que un usuario te la chupe.
+ᰔᩚ *#paja • #pajeame* 
+> ✦ La bot te hace una paja.
+ᰔᩚ *#chaqueta • #jalamela*
+> ✦ Hacerte una chaqueta.
+ᰔᩚ *#hentaisearch • #searchhentai*
+> ✦ Buscador de capítulos hentai.
+ᰔᩚ #xnxxsearch • #xnxxs*
+> ✦ Buscador de vídeos de Xnxx.
+ᰔᩚ *#xvsearch • #xvideossearch*
+> ✦ Buscador de vídeos de Xvideos.
+ᰔᩚ *#pornhubsearch • #phsearch*
+> ✦ Buscador de videos de Pornhub.
+ᰔᩚ *#xvideosdl*
+> ✦ Descarga videos porno de (Xvideos). 
+ᰔᩚ *#xnxxdl*
+> ✦ Descarga videos porno de (xnxx).
   `.trim()
 
   await conn.sendMessage(m.chat, { 
