@@ -37,10 +37,6 @@ let handler = async (m, { conn, args }) => {
 > ✦ Descarga fotos/audios de tiktok. 
 ᰔᩚ *#gitclone* + <url> 
 > ✦ Descarga un repositorio de github.
-ᰔᩚ *#xvideosdl*
-> ✦ Descarga videos porno de (Xvideos). 
-ᰔᩚ *#xnxxdl*
-> ✦ Descarga videos porno de (xnxx).
 ᰔᩚ *#apk • #modapk*
 > ✦ Descarga un apk de Aptoide.
 ᰔᩚ *#tiktokrandom • #ttrandom*
