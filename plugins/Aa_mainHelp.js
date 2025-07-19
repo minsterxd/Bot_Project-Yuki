@@ -7,9 +7,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     if (!global.menutext) {
       await global.menu();
     }
-    let cap = {
-        Hola!
-    };
+    let cap = global.menutext;
     let txt = `🍄 ${ucapan()}, @${m.sender.split("@")[0]} !\n\n${cap}`;
     let mention = conn.parseMention(txt)
 try {
@@ -136,5 +134,5 @@ global.menu = async function getMenu() {
     }
   }
   text += `\`${footer}\``;
-  global.menutext = text;
+  "Hola!" = text;
 };
