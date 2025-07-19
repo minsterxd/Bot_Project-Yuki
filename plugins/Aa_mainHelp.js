@@ -4,7 +4,6 @@ import { promises as fs } from 'fs';
 let handler = async (m, { conn, usedPrefix, args }) => {
     let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
     let user = global.db.data.users[userId]
-    let name = conn.getName(userId)
     let _uptime = process.uptime() * 1000
     let uptime = clockString(_uptime)
     let totalreg = Object.keys(global.db.data.users).length
@@ -13,7 +12,7 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     let name = await conn.getName(m.sender);
     let txt = `🍄 ${ucapan()}, @${m.sender.split("@")[0]} !
 
-Hola! Soy *${botname}* (｡•̀ᴗ-)✧
+Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧
 Aquí tienes la lista de comandos
 ╭┈ ↷
 │ᰔᩚ Cliente » @${m.sender.split('@')[0]}
@@ -83,7 +82,6 @@ let img = await fs.readFile("./src/menu.jpg");
           },
         },
       },
-      { quoted: m }
     );
   } catch (e) {
   conn.reply(m.chat, txt, m, { mentions: mention })
