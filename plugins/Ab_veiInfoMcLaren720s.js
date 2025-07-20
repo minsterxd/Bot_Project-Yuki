@@ -44,12 +44,11 @@ let img = await fs.readFile("./src/McLaren720s.jpg");
     await conn.sendMessage(
       m.chat,
       {
-        document: img,
+        image: img,
         fileName: "ᥡᥙkі sᥙ᥆ᥙ",
         mimetype: "image/png",
         caption: txt,
         fileLength: 1900,
-        jpegThumbnail: imager,
         contextInfo: {
           mentionedJid: mention,
           isForwarded: true,
