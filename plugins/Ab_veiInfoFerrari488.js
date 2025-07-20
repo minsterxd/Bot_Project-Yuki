@@ -1,4 +1,3 @@
-import Jimp from "jimp";
 import { promises as fs } from 'fs';
 
 let handler = async (m, { conn, usedPrefix, args }) => {
@@ -7,75 +6,49 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     let name = conn.getName(userId)
     m.react("🏎️");
     let txt = `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧
-Veo que quieres comprar un super carro, eh? 
-Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
+Veo que estas interesado en la Ferrari 488 Pista, eh? 
+Aqui tienes la información! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 ╭┈ ↷
 │ᰔ Cliente » @${userId.split('@')[0]}
-│❀ Superautos disponibles: 3 
 ╰─────────────────
 
-• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 sobre la 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 info de 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 los super 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 deportivo』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 Info sobre 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 La Ferrari 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 488  Pista 』\` •˚⊹:･ﾟ•
 
-❍ Info de los superdeportivos:
-ᰔᩚ *#Info_McLaren720s*
-> ✦ Puedes ver una foto y la información del McLaren 720s.
-ᰔᩚ *#Info_Ferrari488*
-> ✦ Puedes ver una foto y la información del Ferrari 488 Pista.
-ᰔᩚ *#Info_LamboAveSVG*
-> ✦ Puedes ver una foto y la información del Lamborghini Aventador SVG.
+Bueno, *según mi amigo ChatGPT*, esta es la información sobre el McLaren 720s 🚗:
+La Ferrari 488 Pista es una versión más radical del 488 GTB, presentada en 2018. Está equipado con un motor V8 biturbo de 3.9 litros que entrega 720 caballos de fuerza, permitiéndole acelerar de 0 a 100 km/h en 2.85 segundos. Su nombre "Pista" (pista de carreras en italiano) refleja su enfoque en el rendimiento en circuito. Destaca por su peso reducido, aerodinámica optimizada y tecnología derivada de la F1, ofreciendo una experiencia de conducción extrema y precisa.
 
-• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
-:･ﾟ⊹˚• \`『 para comprar 』\` •˚⊹:･
-• :･ﾟ⊹˚• \`『 tu super 』\` •˚⊹:･ﾟ•
-•:･ﾟ⊹˚• \`『 deportivo 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  Detalles 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  de   la  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  Ferrari  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 488 Pista 』\` •˚⊹:･ﾟ•
 
-❍ Comprar los superdeportivos:
-ᰔᩚ *#Comprar_McLaren720s*
-> ✦ Este comando sirve para comprar tu McLaren 720s (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
-> ✦ Precio: 10000 Yenes
-> ✦ Color: Naranja
-ᰔᩚ *#Comprar_Ferrari488*
-> ✦ Este comando sirve para comprar tu Ferrari 488 Pista (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
+❍ Acerca de la Ferrari 488 Pista:
+ᰔᩚ *Detalles*
 > ✦ Precio: 10000 Yenes
 > ✦ Color: Rojo
-ᰔᩚ *#Comprar_LamboAveSVG*
-> ✦ Este comando sirve para comprar tu Lamborghini Aventador SVG (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
-> ✦ Precio: 10000 Yenes
-> ✦ Color: Verde
+
+❍ Comprar a la Ferrari 488 Pista:
+ᰔᩚ *#Comprar_Ferrari488Pista*
+> ✦ Este comando sirve para comprar tu Ferrari 488 Pista (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
 `;
 let mention = conn.parseMention(txt);
 try {
-const image = await Jimp.read("./src/doc_image.jpg");
-    image.resize(400, 400);
-    const imager = await image.getBufferAsync(Jimp.MIME_JPEG);
-
-let img = await fs.readFile("./src/menu.jpg");
+let img = await fs.readFile("./src/Ferrari488Pista.jpg");
 
     await conn.sendMessage(
       m.chat,
       {
-        document: img,
+        image: img,
         fileName: "ᥡᥙkі sᥙ᥆ᥙ",
         mimetype: "image/png",
         caption: txt,
         fileLength: 1900,
-        jpegThumbnail: imager,
         contextInfo: {
           mentionedJid: mention,
           isForwarded: true,
           forwardingScore: 999,
-          externalAdReply: {
-            title: "",
-            body: `あ ${wm}`,
-            thumbnail: img,
-            sourceUrl: "",
-            mediaType: 1,
-            renderLargerThumbnail: true,
-          },
         },
       },
     );
@@ -84,5 +57,5 @@ let img = await fs.readFile("./src/menu.jpg");
     conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
   }
 };
-handler.command = ["info_ferrari488"];
+handler.command = ["info_ferrari488pista"];
 export default handler;
