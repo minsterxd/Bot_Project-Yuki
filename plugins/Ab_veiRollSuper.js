@@ -25,7 +25,7 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 > ✦ Puedes ver una foto y la información del McLaren 720s.
 ᰔᩚ *#Info_Ferrari488*
 > ✦ Puedes ver una foto y la información del Ferrari 488 Pista.
-ᰔᩚ *#Comprar_LamboAveSVG*
+ᰔᩚ *#Info_LamboAveSVG*
 > ✦ Puedes ver una foto y la información del Lamborghini Aventador SVG.
 
 • :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
@@ -86,20 +86,3 @@ let img = await fs.readFile("./src/menu.jpg");
 };
 handler.command = ["menu", "help", "menú", "commands", "comandos", "?"];
 export default handler;
-
-global.style = async function styles(text, style = 1) {
-  var replacer = [];
-  xStr.map((v, i) =>
-    replacer.push({
-      original: v,
-      convert: yStr[style][i],
-    })
-  );
-  var str = text.toLowerCase().split("");
-  var output = [];
-  str.map((v) => {
-    const find = replacer.find((x) => x.original == v);
-    find ? output.push(find.convert) : output.push(v);
-  });
-  return output.join("");
-};
