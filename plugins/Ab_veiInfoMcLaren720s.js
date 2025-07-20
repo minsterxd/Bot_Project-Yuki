@@ -1,4 +1,3 @@
-import Jimp from "jimp";
 import { promises as fs } from 'fs';
 
 let handler = async (m, { conn, usedPrefix, args }) => {
@@ -35,10 +34,6 @@ El McLaren 720S es un superdeportivo británico lanzado en 2017, parte de la Ser
 `;
 let mention = conn.parseMention(txt);
 try {
-const image = await Jimp.read("./src/Yuki_Vendiendo_xd.jpg");
-    image.resize(400, 400);
-    const imager = await image.getBufferAsync(Jimp.MIME_JPEG);
-
 let img = await fs.readFile("./src/McLaren720s.jpg");
 
     await conn.sendMessage(
