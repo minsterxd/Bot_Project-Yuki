@@ -53,14 +53,6 @@ let img = await fs.readFile("./src/McLaren720s.jpg");
           mentionedJid: mention,
           isForwarded: true,
           forwardingScore: 999,
-          externalAdReply: {
-            title: "",
-            body: `あ ${wm}`,
-            thumbnail: img,
-            sourceUrl: "https://example.com/1",
-            mediaType: 1,
-            renderLargerThumbnail: true,
-          },
         },
       },
     );
