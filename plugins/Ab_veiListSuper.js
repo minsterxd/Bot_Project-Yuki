@@ -14,11 +14,11 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 │❀ Superautos disponibles: 3 
 ╰─────────────────
 
-• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 sobre la 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 info de 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 los super 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 deportivo』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  Comandos  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  sobre la  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  info  de  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 los  super 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 deportivos 』\` •˚⊹:･ﾟ•
 
 ❍ Info de los superdeportivos:
 ᰔᩚ *#Info_McLaren720s*
@@ -28,10 +28,11 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 ᰔᩚ *#Info_LamboAveSVG*
 > ✦ Puedes ver una foto y la información del Lamborghini Aventador SVG.
 
-• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
-:･ﾟ⊹˚• \`『 para comprar 』\` •˚⊹:･
-• :･ﾟ⊹˚• \`『 tu super 』\` •˚⊹:･ﾟ•
-•:･ﾟ⊹˚• \`『 deportivo 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  Comandos  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『    para    』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『   comprar  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  tu super  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  deportivo 』\` •˚⊹:･ﾟ•
 
 ❍ Comprar los superdeportivos:
 ᰔᩚ *#Comprar_McLaren720s*
