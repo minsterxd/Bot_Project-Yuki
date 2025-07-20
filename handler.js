@@ -35,6 +35,8 @@ let user = global.db.data.users[m.sender]
 if (typeof user !== 'object')  
 global.db.data.users[m.sender] = {}
 if (user) {
+if (!isNumber(user.zafiro))
+user.zafiro = 0
 if (!isNumber(user.exp))
 user.exp = 0
 if (!isNumber(user.coin))
@@ -111,6 +113,7 @@ user.warn = 0
 global.db.data.users[m.sender] = {
 exp: 0,
 coin: 10,
+zafiro: 0,
 joincount: 1,
 diamond: 3,
 lastadventure: 0,
