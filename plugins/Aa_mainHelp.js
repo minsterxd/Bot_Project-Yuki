@@ -59,30 +59,29 @@ const image = await Jimp.read("./src/doc_image.jpg");
 
 let img = await fs.readFile("./src/menu.jpg");
 
-    await conn.sendMessage(
-      m.chat,
-      {
-        document: img,
-        fileName: "ᥡᥙkі sᥙ᥆ᥙ",
-        mimetype: "image/png",
-        caption: txt,
-        fileLength: 1900,
-        jpegThumbnail: imager,
-        contextInfo: {
-          mentionedJid: mention,
-          isForwarded: true,
-          forwardingScore: 999,
-          externalAdReply: {
-            title: "",
-            body: `あ ${wm}`,
-            thumbnail: img,
-            sourceUrl: "",
-            mediaType: 1,
-            renderLargerThumbnail: true,
-          },
-        },
-      },
-    );
+    await conn.sendMessage(m.chat, {
+  text: "📋 Menú de Comandos",
+  footer: "Selecciona una categoría",
+  title: "Hola, elige una opción:",
+  buttonText: "Abrir Menú 📂",
+  sections: [
+    {
+      title: "Categorías",
+      rows: [
+        { title: "📄 Info Bot", rowId: "#ListaInfo" },
+        { title: "🎮 Juegos", rowId: "#ListaJuegos" },
+        { title: "💰 Economía", rowId: "#ListaEco" },
+        { title: "🧩 Stickers", rowId: "#ListaStickers" },
+        { title: "🧙 Perfil", rowId: "#ListaPerfil" },
+        { title: "🌐 Buscadores", rowId: "#ListaBuscadores" },
+        { title: "🧰 Herramientas", rowId: "#ListaTools" },
+        { title: "📥 Descargas", rowId: "#ListaDescargas" },
+        { title: "👥 Grupos", rowId: "#ListaGrupos" },
+        { title: "✨ Anime", rowId: "#ListaAnime" }
+      ]
+    }
+  ]
+},
   } catch (e) {
   conn.reply(m.chat, txt, m, { mentions: mention })
     conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
