@@ -5,36 +5,61 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     let user = global.db.data.users[userId]
     let name = conn.getName(userId)
     m.react("🏎️");
-    if (!user) {
-        return conn.reply(m.chat, `${emoji} El usuario no se encuentra en la base de Datos.`, m);
-    }
-    user.lamboavesvj = user.lamboavesvj || 0;
-    if (!user.lamboavesvj || user.lamboavesvj < 1) {
-        return conn.reply(m.chat, `No tienes ningún Lamborghini Aventador SVJ en tu garaje! Haz #Info_LamboAveSVJ para obtener información sobre el auto.`, m);
-    }
-    let lamboavesvj= 1;
-    user.lamboavesvj -= lamboavesvj; 
-    let img = await fs.readFile("./src/LamboAveSVJ_Drift.jpg");
-    let info = `@${userId.split('@')[0]} Esta haciendo *Drifting* con su Lamborghini Aventador SVJ!`;
+    let txt = `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧
+Veo que estas interesado en el Lamborghini Aventador SVJ, eh? 
+Aqui tienes la información! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
+╭┈ ↷
+│ᰔ Cliente » @${userId.split('@')[0]}
+╰─────────────────
+
+• :･ﾟ⊹˚• \`『 Info  sobre 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『     el      』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 Lamborghini 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  Aventador  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『     SVJ     』\` •˚⊹:･ﾟ•
+
+Bueno, *según mi amigo ChatGPT*, esta es la información sobre el Lamborghini Aventador SVJ 🚗:
+
+
+• :･ﾟ⊹˚• \`『   Detalles  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『     del     』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 Lamborghini 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  Aventador  』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『    SVJ a    』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『   comprar   』\` •˚⊹:･ﾟ•
+
+❍ :
+ᰔᩚ *Detalles*
+> ✦ Precio: 10000 Yenes
+> ✦ Color: Verde
+
+❍ Comprar el McLaren 720s:
+ᰔᩚ *#Comprar_McLaren720s*
+> ✦ Este comando sirve para comprar tu McLaren 720s (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
+`;
+let mention = conn.parseMention(txt);
+try {
+let img = await fs.readFile("./src/McLaren720s.jpg");
+
     await conn.sendMessage(
       m.chat,
       {
         image: img,
-            fileName: "ᥡᥙkі sᥙ᥆ᥙ",
-            mimetype: "image/png",
-            caption: info,
-            fileLength: 1900,
-            contextInfo: {
-                mentionedJid: [userId]
-            },
+        fileName: "ᥡᥙkі sᥙ᥆ᥙ",
+        mimetype: "image/png",
+        caption: txt,
+        fileLength: 1900,
+        contextInfo: {
+          mentionedJid: mention,
+          isForwarded: true,
+          forwardingScore: 999,
+        },
       },
     );
+  } catch (e) {
+  conn.reply(m.chat, txt, m, { mentions: mention })
+    conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
+  }
 };
-
-handler.help = ['driftlamboavesvj'];
-handler.tags = ['driftlamboavesvj'];
-handler.command = ['drift_lamboavesvj']
-handler.group = true;
-handler.register = true;
-
+handler.command = ["info_mclaren720s"];
 export default handler;
