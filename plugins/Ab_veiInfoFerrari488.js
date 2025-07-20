@@ -35,7 +35,7 @@ La Ferrari 488 Pista es una versión más radical del 488 GTB, presentada en 201
 `;
 let mention = conn.parseMention(txt);
 try {
-let img = await fs.readFile("./src/Ferrari488Pista.jpg");
+let img = await fs.readFile("./src/autos/super/Ferrari488Pista.jpg");
 
     await conn.sendMessage(
       m.chat,
