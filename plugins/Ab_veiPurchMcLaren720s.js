@@ -23,12 +23,7 @@ let handler = async (m, { conn }) => {
         fileName: "ᥡᥙkі sᥙ᥆ᥙ",
         mimetype: "image/png",
         caption: info,
-        fileLength: 1900,
-        contextInfo: {
-          mentionedJid: mention,
-          isForwarded: true,
-          forwardingScore: 999,
-        },
+        fileLength: 1900
       },
     );
 };
