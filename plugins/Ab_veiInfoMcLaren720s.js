@@ -7,11 +7,10 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     let name = conn.getName(userId)
     m.react("🏎️");
     let txt = `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧
-Veo que quieres comprar un super carro, eh? 
-Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
+Veo que estas interesado en el McLaren 720s, eh? 
+Aqui tienes la información! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 ╭┈ ↷
 │ᰔ Cliente » @${userId.split('@')[0]}
-│❀ Superautos disponibles: 3 
 ╰─────────────────
 
 • :･ﾟ⊹˚• \`『 Info sobre 』\` •˚⊹:･ﾟ•
@@ -26,10 +25,13 @@ El McLaren 720S es un superdeportivo británico lanzado en 2017, parte de la Ser
 • :･ﾟ⊹˚• \`『 a comprar 』\` •˚⊹:･ﾟ•
 
 ❍ Comprar los superdeportivos:
-ᰔᩚ *#Comprar_McLaren720s*
-> ✦ Este comando sirve para comprar tu McLaren 720s (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
+ᰔᩚ *Detalles*
 > ✦ Precio: 10000 Yenes
 > ✦ Color: Naranja
+
+❍ Comprar el McLaren 720s:
+ᰔᩚ *#Comprar_McLaren720s*
+> ✦ Este comando sirve para comprar tu McLaren 720s (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
 `;
 let mention = conn.parseMention(txt);
 try {
