@@ -60,27 +60,30 @@ const image = await Jimp.read("./src/doc_image.jpg");
 let img = await fs.readFile("./src/menu.jpg");
 
     await conn.sendMessage(m.chat, {
-  text: "📋 Menú de Comandos",
-  footer: "Selecciona una categoría",
-  title: "Hola, elige una opción:",
-  buttonText: "Abrir Menú 📂",
-  sections: [
-    {
-      title: "Categorías",
-      rows: [
-        { title: "📄 Info Bot", rowId: "#ListaInfo" },
-        { title: "🎮 Juegos", rowId: "#ListaJuegos" },
-        { title: "💰 Economía", rowId: "#ListaEco" },
-        { title: "🧩 Stickers", rowId: "#ListaStickers" },
-        { title: "🧙 Perfil", rowId: "#ListaPerfil" },
-        { title: "🌐 Buscadores", rowId: "#ListaBuscadores" },
-        { title: "🧰 Herramientas", rowId: "#ListaTools" },
-        { title: "📥 Descargas", rowId: "#ListaDescargas" },
-        { title: "👥 Grupos", rowId: "#ListaGrupos" },
-        { title: "✨ Anime", rowId: "#ListaAnime" }
-      ]
-    }
-  ]
+  listMessage: {
+    title: "Hola, elige una opción:",
+    description: "📋 Menú de Comandos",
+    footerText: "Selecciona una categoría",
+    buttonText: "Abrir Menú 📂",
+    listType: 1,
+    sections: [
+      {
+        title: "Categorías",
+        rows: [
+          { title: "📄 Info Bot", rowId: "#ListaInfo" },
+          { title: "🎮 Juegos", rowId: "#ListaJuegos" },
+          { title: "💰 Economía", rowId: "#ListaEco" },
+          { title: "🧩 Stickers", rowId: "#ListaStickers" },
+          { title: "🧙 Perfil", rowId: "#ListaPerfil" },
+          { title: "🌐 Buscadores", rowId: "#ListaBuscadores" },
+          { title: "🧰 Herramientas", rowId: "#ListaTools" },
+          { title: "📥 Descargas", rowId: "#ListaDescargas" },
+          { title: "👥 Grupos", rowId: "#ListaGrupos" },
+          { title: "✨ Anime", rowId: "#ListaAnime" }
+        ]
+      }
+    ]
+  }
 });
   } catch (e) {
   conn.reply(m.chat, txt, m, { mentions: mention })
