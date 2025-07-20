@@ -1,90 +1,105 @@
-import { promises as fs } from 'fs'
+import Jimp from "jimp";
+import { promises as fs } from 'fs';
 
-const charactersFilePath = './src/database/characters.json'
-const haremFilePath = './src/database/harem.json'
+let handler = async (m, { conn, usedPrefix, args }) => {
+    let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+    let user = global.db.data.users[userId]
+    let name = conn.getName(userId)
+    m.react("🏎️");
+    let txt = `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧
+Veo que quieres comprar un super carro, eh? 
+Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
+╭┈ ↷
+│ᰔ Cliente » @${userId.split('@')[0]}
+│❀ Superautos disponibles: 3 
+╰─────────────────
 
-const cooldowns = {}
+• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 sobre la 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 info de 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 los super 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 deportivo』\` •˚⊹:･ﾟ•
 
-async function loadCharacters() {
-    try {
-        const data = await fs.readFile(charactersFilePath, 'utf-8')
-        return JSON.parse(data)
-    } catch (error) {
-        throw new Error('❀ No se pudo cargar el archivo characters.json.')
-    }
-}
+❍ Info de los superdeportivos:
+ᰔᩚ *#Info_McLaren720s*
+> ✦ Puedes ver una foto y la información del McLaren 720s.
+ᰔᩚ *#Info_Ferrari488*
+> ✦ Puedes ver una foto y la información del Ferrari 488 Pista.
+ᰔᩚ *#Comprar_LamboAveSVG*
+> ✦ Puedes ver una foto y la información del Lamborghini Aventador SVG.
 
-async function saveCharacters(characters) {
-    try {
-        await fs.writeFile(charactersFilePath, JSON.stringify(characters, null, 2), 'utf-8')
-    } catch (error) {
-        throw new Error('❀ No se pudo guardar el archivo characters.json.')
-    }
-}
+• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
+:･ﾟ⊹˚• \`『 para comprar 』\` •˚⊹:･
+• :･ﾟ⊹˚• \`『 tu super 』\` •˚⊹:･ﾟ•
+•:･ﾟ⊹˚• \`『 deportivo 』\` •˚⊹:･ﾟ•
 
-async function loadHarem() {
-    try {
-        const data = await fs.readFile(haremFilePath, 'utf-8')
-        return JSON.parse(data)
-    } catch (error) {
-        return []
-    }
-}
+❍ Comprar los superdeportivos:
+ᰔᩚ *#Comprar_McLaren720s*
+> ✦ Este comando sirve para comprar tu McLaren 720s (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
+> ✦ Precio: 10000 Yenes
+> ✦ Color: Naranja
+ᰔᩚ *#Comprar_Ferrari488*
+> ✦ Este comando sirve para comprar tu Ferrari 488 Pista (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
+> ✦ Precio: 10000 Yenes
+> ✦ Color: Rojo
+ᰔᩚ *#Comprar_LamboAveSVG*
+> ✦ Este comando sirve para comprar tu Lamborghini Aventador SVG (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
+> ✦ Precio: 10000 Yenes
+> ✦ Color: Verde
+`;
+let mention = conn.parseMention(txt);
+try {
+const image = await Jimp.read("./src/doc_image.jpg");
+    image.resize(400, 400);
+    const imager = await image.getBufferAsync(Jimp.MIME_JPEG);
 
-async function saveHarem(harem) {
-    try {
-        await fs.writeFile(haremFilePath, JSON.stringify(harem, null, 2), 'utf-8')
-    } catch (error) {
-        throw new Error('❀ No se pudo guardar el archivo harem.json.')
-    }
-}
+let img = await fs.readFile("./src/menu.jpg");
 
-let handler = async (m, { conn }) => {
-    const userId = m.sender
-    const now = Date.now()
+    await conn.sendMessage(
+      m.chat,
+      {
+        document: img,
+        fileName: "ᥡᥙkі sᥙ᥆ᥙ",
+        mimetype: "image/png",
+        caption: txt,
+        fileLength: 1900,
+        jpegThumbnail: imager,
+        contextInfo: {
+          mentionedJid: mention,
+          isForwarded: true,
+          forwardingScore: 999,
+          externalAdReply: {
+            title: "",
+            body: `あ ${wm}`,
+            thumbnail: img,
+            sourceUrl: "",
+            mediaType: 1,
+            renderLargerThumbnail: true,
+          },
+        },
+      },
+    );
+  } catch (e) {
+  conn.reply(m.chat, txt, m, { mentions: mention })
+    conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
+  }
+};
+handler.command = ["menu", "help", "menú", "commands", "comandos", "?"];
+export default handler;
 
-    if (cooldowns[userId] && now < cooldowns[userId]) {
-        const remainingTime = Math.ceil((cooldowns[userId] - now) / 1000)
-        const minutes = Math.floor(remainingTime / 60)
-        const seconds = remainingTime % 60
-        return await conn.reply(m.chat, `《✧》Debes esperar *${minutes} minutos y ${seconds} segundos* para usar *#rw* de nuevo.`, m)
-    }
-
-    try {
-        const characters = await loadCharacters()
-        const randomCharacter = characters[Math.floor(Math.random() * characters.length)]
-        const randomImage = randomCharacter.img[Math.floor(Math.random() * randomCharacter.img.length)]
-
-        const harem = await loadHarem()
-        const userEntry = harem.find(entry => entry.characterId === randomCharacter.id)
-        const statusMessage = randomCharacter.user 
-            ? `Reclamado por @${randomCharacter.user.split('@')[0]}` 
-            : 'Libre'
-
-        const message = `❀ Nombre » *${randomCharacter.name}*
-⚥ Género » *${randomCharacter.gender}*
-✰ Valor » *${randomCharacter.value}*
-♡ Estado » ${statusMessage}
-❖ Fuente » *${randomCharacter.source}*
-✦ ID: *${randomCharacter.id}*`
-
-        const mentions = userEntry ? [userEntry.userId] : []
-        await conn.sendFile(m.chat, randomImage, `${randomCharacter.name}.jpg`, message, m, { mentions })
-
-        if (!randomCharacter.user) {
-            await saveCharacters(characters)
-        }
-
-        cooldowns[userId] = now + 15 * 60 * 1000
-
-    } catch (error) {
-        await conn.reply(m.chat, `✘ Error al cargar el personaje: ${error.message}`, m)
-    }
-}
-
-handler.help = ['ver', 'rw', 'rollwaifu']
-handler.tags = ['gacha']
-handler.command = ['ver', 'rw', 'rollwaifu']
-handler.group = true
-
-export default handler
+global.style = async function styles(text, style = 1) {
+  var replacer = [];
+  xStr.map((v, i) =>
+    replacer.push({
+      original: v,
+      convert: yStr[style][i],
+    })
+  );
+  var str = text.toLowerCase().split("");
+  var output = [];
+  str.map((v) => {
+    const find = replacer.find((x) => x.original == v);
+    find ? output.push(find.convert) : output.push(v);
+  });
+  return output.join("");
+};
