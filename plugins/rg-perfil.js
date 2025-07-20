@@ -22,7 +22,8 @@ let handler = async (m, { conn, args }) => {
     let role = user.role || 'Sin Rango';
     let coins = user.coin || 0;
     let bankCoins = user.bank || 0;
-
+    let zafiro = user.zafiro || 0;
+    
     let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1745522645448.jpeg');
 
     let profileText = `
@@ -40,6 +41,7 @@ ${description}
 
 ⛁ *Coins Cartera* » ${coins.toLocaleString()} ${moneda}
 ⛃ *Coins Banco* » ${bankCoins.toLocaleString()} ${moneda}
+💎 *Zafiros* » ${zafiro.toLocaleString()} ${moneda}
 ❁ *Premium* » ${user.premium ? '✅' : '❌'}
   `.trim();
 
