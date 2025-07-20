@@ -14,10 +14,75 @@
    },
    {
       "id": "2",
-      "name": "McLaren 720S",
-      "color": "Negro",
+      "name": "Ferrari 488 Pista",
+      "color": "Rojo",
       "value": "10000",
-      "Electric": "No",
+      "Electrico": "No",
+      "img": [
+         ""
+      ],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "3",
+      "name": "Ferrari 488 Pista",
+      "color": "Rojo",
+      "value": "10000",
+      "Electrico": "No",
+      "img": [
+         ""
+      ],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "4",
+      "name": "Ferrari 488 Pista",
+      "color": "Rojo",
+      "value": "10000",
+      "Electrico": "No",
+      "img": [
+         ""
+      ],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "5",
+      "name": "Ferrari 488 Pista",
+      "color": "Rojo",
+      "value": "10000",
+      "Electrico": "No",
+      "img": [
+         ""
+      ],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "6",
+      "name": "Ferrari 488 Pista",
+      "color": "Rojo",
+      "value": "10000",
+      "Electrico": "No",
+      "img": [
+         ""
+      ],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "7",
+      "name": "Ferrari 488 Pista",
+      "color": "Rojo",
+      "value": "10000",
+      "Electrico": "No",
       "img": [
          ""
       ],
