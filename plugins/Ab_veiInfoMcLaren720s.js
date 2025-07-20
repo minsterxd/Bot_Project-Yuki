@@ -70,5 +70,5 @@ let img = await fs.readFile("./src/McLaren720s.jpg");
     conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
   }
 };
-handler.command = ["menu", "help", "menú", "commands", "comandos", "?"];
+handler.command = ["info_mclaren720s"];
 export default handler;
