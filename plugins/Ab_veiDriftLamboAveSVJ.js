@@ -14,7 +14,7 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     }
     let lamboavesvj= 1;
     user.lamboavesvj -= lamboavesvj; 
-    let img = await fs.readFile("./src/LamboAveSVJ_Drift.jpg");
+    let img = await fs.readFile("./src/autos/super/LamboAveSVJ_Drift.jpg");
     let info = `@${userId.split('@')[0]} Esta haciendo *Drifting* con su Lamborghini Aventador SVJ!`;
     await conn.sendMessage(
       m.chat,
