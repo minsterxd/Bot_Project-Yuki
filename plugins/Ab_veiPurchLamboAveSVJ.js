@@ -14,7 +14,7 @@ let handler = async (m, { conn }) => {
     let Purchlamboavesvj = 100000; 
     user.lamboavesvj += Purchlamboavesvj;
     user.coin -= 10000; 
-    let img = await fs.readFile("./src/LamboAveSVJ.jpg");
+    let img = await fs.readFile("./src/autos/super/LamboAveSVJ.jpg");
     let info = `Compraste con éxito tu Lamborghini Aventador SVJ. Disfrútalo ❤️. Y gracias por esos deliciosos 10000 Yenes (⁠ ⁠/⁠^⁠ω⁠^⁠)⁠/`;
     await conn.sendMessage(
       m.chat,
