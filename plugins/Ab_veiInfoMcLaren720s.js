@@ -25,7 +25,7 @@ El McLaren 720S es un superdeportivo británico lanzado en 2017, parte de la Ser
 • :･ﾟ⊹˚• \`『 720s   a 』\` •˚⊹:･ﾟ•
 • :･ﾟ⊹˚• \`『  comprar 』\` •˚⊹:･ﾟ•
 
-❍ Comprar los superdeportivos:
+❍ Acerca del McLaren 720s:
 ᰔᩚ *Detalles*
 > ✦ Precio: 10000 Yenes
 > ✦ Color: Naranja
