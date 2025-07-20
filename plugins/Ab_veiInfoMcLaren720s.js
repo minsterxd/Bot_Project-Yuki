@@ -58,7 +58,7 @@ let img = await fs.readFile("./src/McLaren720s.jpg");
             title: "",
             body: `あ ${wm}`,
             thumbnail: img,
-            sourceUrl: "",
+            sourceUrl: "https://example.com/1",
             mediaType: 1,
             renderLargerThumbnail: true,
           },
