@@ -19,7 +19,7 @@ Aqui tienes la información! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 • :･ﾟ⊹˚• \`『     SVJ     』\` •˚⊹:･ﾟ•
 
 Bueno, *según mi amigo ChatGPT*, esta es la información sobre el Lamborghini Aventador SVJ 🚗:
-
+El Lamborghini Aventador SVJ (Super Veloce Jota) es una versión de alto rendimiento del Aventador, lanzada en 2018. Monta un motor V12 atmosférico de 6.5 litros que produce 770 caballos de fuerza, logrando una aceleración de 0 a 100 km/h en 2.8 segundos. Destaca por su aerodinámica activa (sistema ALA), tracción total y chasis ligero. Es un superdeportivo diseñado para ofrecer máxima velocidad, agarre y emoción, con un enfoque directo en el rendimiento en pista.
 
 • :･ﾟ⊹˚• \`『   Detalles  』\` •˚⊹:･ﾟ•
 • :･ﾟ⊹˚• \`『     del     』\` •˚⊹:･ﾟ•
