@@ -8,7 +8,7 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     if (!user) {
         return conn.reply(m.chat, `${emoji} El usuario no se encuentra en la base de Datos.`, m);
     }
-    user.mclaren720s || user.mclaren720s 0;
+    user.mclaren720s = user.mclaren720s || 0;
     if (!user.mclaren720s || user.mclaren720s < 1) {
         return conn.reply(m.chat, `No tienes ningún McLaren 720s en tu garaje! Haz #Info_McLaren720s para obtener información sobre el auto.`, m);
     }
@@ -20,10 +20,13 @@ let handler = async (m, { conn, usedPrefix, args }) => {
       m.chat,
       {
         image: img,
-        fileName: "ᥡᥙkі sᥙ᥆ᥙ",
-        mimetype: "image/png",
-        caption: info,
-        fileLength: 1900
+            fileName: "ᥡᥙkі sᥙ᥆ᥙ",
+            mimetype: "image/png",
+            caption: info,
+            fileLength: 1900,
+            contextInfo: {
+                mentionedJid: [userId]
+            },
       },
     );
 };
