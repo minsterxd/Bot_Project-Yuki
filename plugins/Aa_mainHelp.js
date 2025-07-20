@@ -81,7 +81,7 @@ let img = await fs.readFile("./src/menu.jpg");
       ]
     }
   ]
-},
+});
   } catch (e) {
   conn.reply(m.chat, txt, m, { mentions: mention })
     conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
