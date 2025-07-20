@@ -14,7 +14,7 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     }
     let ferrari488pista = 1;
     user.ferrari488pista -= ferrari488pista; 
-    let img = await fs.readFile("./src/Ferrari488Pista_Drift.jpg");
+    let img = await fs.readFile("./src/autos/super/Ferrari488Pista_Drift.jpg");
     let info = `@${userId.split('@')[0]} Esta haciendo *Drifting* con su Ferrari 488 Pista!`;
     await conn.sendMessage(
       m.chat,
