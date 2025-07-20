@@ -92,11 +92,11 @@ export default handler;
 
 function ucapan() {
   const time = moment.tz("America/Los_Angeles").format("HH");
-  if (time >= 18) return "Good night.";
-  if (time >= 15) return "Good afternoon.";
-  if (time >= 10) return "Good afternoon.";
-  if (time >= 4) return "Good morning.";
-  return "Hello.";
+  if (time >= 18) return "Buenas noches.";
+  if (time >= 15) return "Buenas tardes.";
+  if (time >= 10) return "Buenas tardes.";
+  if (time >= 4) return "Buenos días.";
+  return "Hola.";
 };
 
 global.style = async function styles(text, style = 1) {
