@@ -15,7 +15,7 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     let McLaren720s = 1;
     user.mclaren720s -= McLaren720s; 
     let img = await fs.readFile("./src/McLaren720s_Drift.jpg");
-    let info = `@ Esta haciendo Drifting con su McLaren720s!`;
+    let info = `@${userId.split('@')[0]} Esta haciendo *Drifting* con su McLaren720s!`;
     await conn.sendMessage(
       m.chat,
       {
@@ -28,9 +28,9 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     );
 };
 
-handler.help = ['comprarmclaren'];
-handler.tags = ['comprarmclaren720s'];
-handler.command = ['comprar_mclaren720s']
+handler.help = ['driftmclaren'];
+handler.tags = ['driftmclaren720s'];
+handler.command = ['drift_mclaren720s']
 handler.group = true;
 handler.register = true;
 
