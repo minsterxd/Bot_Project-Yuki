@@ -22,7 +22,7 @@ El McLaren 720S es un superdeportivo británico lanzado en 2017, parte de la Ser
 • :･ﾟ⊹˚• \`『 Detalles 』\` •˚⊹:･ﾟ•
 • :･ﾟ⊹˚• \`『    del   』\` •˚⊹:･ﾟ•
 • :･ﾟ⊹˚• \`『  McLaren 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 720s   a 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  720s a  』\` •˚⊹:･ﾟ•
 • :･ﾟ⊹˚• \`『  comprar 』\` •˚⊹:･ﾟ•
 
 ❍ Acerca del McLaren 720s:
@@ -36,7 +36,7 @@ El McLaren 720S es un superdeportivo británico lanzado en 2017, parte de la Ser
 `;
 let mention = conn.parseMention(txt);
 try {
-let img = await fs.readFile("./src/McLaren720s.jpg");
+let img = await fs.readFile("./src/autos/super/McLaren720s.jpg");
 
     await conn.sendMessage(
       m.chat,
