@@ -20,8 +20,10 @@ Bueno, *según mi amigo ChatGPT*, esta es la información sobre el McLaren 720s 
 El McLaren 720S es un superdeportivo británico lanzado en 2017, parte de la Serie Super de McLaren. Equipa un motor V8 biturbo de 4.0 litros que produce 720 caballos de fuerza, lo que le permite acelerar de 0 a 100 km/h en 2.9 segundos. Destaca por su diseño aerodinámico, puertas tipo diédricas y chasis de fibra de carbono, ofreciendo un equilibrio impresionante entre rendimiento extremo y manejo refinado.
 
 • :･ﾟ⊹˚• \`『 Detalles 』\` •˚⊹:･ﾟ•
- :･ﾟ⊹˚• \`『 del McLaren 』\` •˚⊹:･ﾟ
-• :･ﾟ⊹˚• \`『 a comprar 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『    del   』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  McLaren 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 720s   a 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『  comprar 』\` •˚⊹:･ﾟ•
 
 ❍ Comprar los superdeportivos:
 ᰔᩚ *Detalles*
