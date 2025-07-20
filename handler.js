@@ -40,7 +40,7 @@ user.mclaren720s = 0
 if (!isNumber(user.exp))
 user.exp = 0
 if (!isNumber(user.coin))
-user.coin = 10
+user.coin = 100000
 if (!isNumber(user.joincount))
 user.joincount = 1
 if (!isNumber(user.diamond))
@@ -112,7 +112,7 @@ user.warn = 0
 } else
 global.db.data.users[m.sender] = {
 exp: 0,
-coin: 10,
+coin: 100000,
 mclaren720s: 0,
 joincount: 1,
 diamond: 3,
