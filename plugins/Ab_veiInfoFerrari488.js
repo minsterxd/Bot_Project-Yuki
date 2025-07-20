@@ -84,5 +84,5 @@ let img = await fs.readFile("./src/menu.jpg");
     conn.reply(m.chat, "❎ Error al mostrar el menú principal : " + e, m);
   }
 };
-handler.command = ["menu", "help", "menú", "commands", "comandos", "?"];
+handler.command = ["info_ferrari488"];
 export default handler;
