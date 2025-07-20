@@ -37,6 +37,10 @@ global.db.data.users[m.sender] = {}
 if (user) {
 if (!isNumber(user.mclaren720s))
 user.mclaren720s = 0
+if (!isNumber(user.ferrari488pista))
+user.ferrari488pista = 0
+if (!isNumber(user.lamboavesvj))
+user.lamboavesvj = 0
 if (!isNumber(user.exp))
 user.exp = 0
 if (!isNumber(user.coin))
@@ -114,6 +118,8 @@ global.db.data.users[m.sender] = {
 exp: 0,
 coin: 100000,
 mclaren720s: 0,
+ferrari488pista: 0,
+lamboavesvj: 0,
 joincount: 1,
 diamond: 3,
 lastadventure: 0,
