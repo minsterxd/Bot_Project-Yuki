@@ -39,7 +39,7 @@ El Lamborghini Aventador SVJ (Super Veloce Jota) es una versión de alto rendimi
 `;
 let mention = conn.parseMention(txt);
 try {
-let img = await fs.readFile("./src/McLaren720s.jpg");
+let img = await fs.readFile("./src/LamboAveSVJ.jpg");
 
     await conn.sendMessage(
       m.chat,
