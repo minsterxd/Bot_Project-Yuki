@@ -14,7 +14,7 @@ let handler = async (m, { conn }) => {
     let Purchferrari488pista = 100000; 
     user.ferrari488pista += Purchferrari488pista;
     user.coin -= 10000; 
-    let img = await fs.readFile("./src/Ferrari488Pista.jpg");
+    let img = await fs.readFile("./src/autos/super/Ferrari488Pista.jpg");
     let info = `Compraste con éxito tu Ferrari 488 Pista. Disfrútalo ❤️. Y gracias por esos deliciosos 10000 Yenes (⁠ ⁠/⁠^⁠ω⁠^⁠)⁠/`;
     await conn.sendMessage(
       m.chat,
