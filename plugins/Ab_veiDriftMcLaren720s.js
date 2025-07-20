@@ -11,7 +11,7 @@ let handler = async (m, { conn }) => {
     let McLaren720s = 1;
     user.mclaren720s -= McLaren720s; 
     let img = await fs.readFile("./src/McLaren720s_Drift.jpg");
-    let info = `Compraste con éxito tu McLaren 720s. Disfrútalo ❤️. Y gracias por esos deliciosos 10000 Yenes (⁠ ⁠/⁠^⁠ω⁠^⁠)⁠/`;
+    let info = `@ Esta haciendo Drifting con su McLaren720s!`;
     await conn.sendMessage(
       m.chat,
       {
