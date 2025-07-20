@@ -1,6 +1,10 @@
 import { promises as fs } from 'fs';
 
-let handler = async (m, { conn }) => {
+let handler = async (m, { conn, usedPrefix, args }) => {
+    let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+    let user = global.db.data.users[userId]
+    let name = conn.getName(userId)
+    m.react("🏎️");
     let user = global.db.data.users[m.sender];
     if (!user) {
         return conn.reply(m.chat, `${emoji} El usuario no se encuentra en la base de Datos.`, m);
