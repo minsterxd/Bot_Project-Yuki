@@ -14,38 +14,22 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 │❀ Superautos disponibles: 3 
 ╰─────────────────
 
-• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 sobre la 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 info de 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 los super 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 deportivo』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 Info sobre 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 el McLaren 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『    720s    』\` •˚⊹:･ﾟ•
 
-❍ Info de los superdeportivos:
-ᰔᩚ *#Info_McLaren720s*
-> ✦ Puedes ver una foto y la información del McLaren 720s.
-ᰔᩚ *#Info_Ferrari488*
-> ✦ Puedes ver una foto y la información del Ferrari 488 Pista.
-ᰔᩚ *#Info_LamboAveSVG*
-> ✦ Puedes ver una foto y la información del Lamborghini Aventador SVG.
+Bueno, *según mi amigo ChatGPT*, esta es la información sobre el McLaren 720s 🚗:
+El McLaren 720S es un superdeportivo británico lanzado en 2017, parte de la Serie Super de McLaren. Equipa un motor V8 biturbo de 4.0 litros que produce 720 caballos de fuerza, lo que le permite acelerar de 0 a 100 km/h en 2.9 segundos. Destaca por su diseño aerodinámico, puertas tipo diédricas y chasis de fibra de carbono, ofreciendo un equilibrio impresionante entre rendimiento extremo y manejo refinado.
 
-• :･ﾟ⊹˚• \`『 Comandos 』\` •˚⊹:･ﾟ•
-:･ﾟ⊹˚• \`『 para comprar 』\` •˚⊹:･
-• :･ﾟ⊹˚• \`『 tu super 』\` •˚⊹:･ﾟ•
-•:･ﾟ⊹˚• \`『 deportivo 』\` •˚⊹:･ﾟ•
+• :･ﾟ⊹˚• \`『 Detalles 』\` •˚⊹:･ﾟ•
+ :･ﾟ⊹˚• \`『 del McLaren 』\` •˚⊹:･ﾟ
+• :･ﾟ⊹˚• \`『 a comprar 』\` •˚⊹:･ﾟ•
 
 ❍ Comprar los superdeportivos:
 ᰔᩚ *#Comprar_McLaren720s*
 > ✦ Este comando sirve para comprar tu McLaren 720s (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
 > ✦ Precio: 10000 Yenes
 > ✦ Color: Naranja
-ᰔᩚ *#Comprar_Ferrari488*
-> ✦ Este comando sirve para comprar tu Ferrari 488 Pista (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
-> ✦ Precio: 10000 Yenes
-> ✦ Color: Rojo
-ᰔᩚ *#Comprar_LamboAveSVG*
-> ✦ Este comando sirve para comprar tu Lamborghini Aventador SVG (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
-> ✦ Precio: 10000 Yenes
-> ✦ Color: Verde
 `;
 let mention = conn.parseMention(txt);
 try {
