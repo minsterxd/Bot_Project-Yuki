@@ -1,0 +1,28 @@
+[
+   {
+      "id": "1",
+      "name": "McLaren 720S",
+      "color": "Negro",
+      "value": "10000",
+      "Electric": "No",
+      "img": [
+         ""
+      ],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "2",
+      "name": "McLaren 720S",
+      "color": "Negro",
+      "value": "10000",
+      "Electric": "No",
+      "img": [
+         ""
+      ],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+]
