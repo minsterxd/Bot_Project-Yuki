@@ -116,6 +116,7 @@ npm start
 
 <details>
  <summary><b> 🜸 Enlaces Oficiales </b></summary>
+ > No vallan a ninguno de esos grupos a hacer cuestiones sobre este bot, allí no se encargan de eso. Para ponerse en contacto con Minsterxd, pueden hacerlo mediante la sección de contacto.
 
  * Canal Oficial  [`¡Click aquí!`](https://whatsapp.com/channel/0029VbAfPu9BqbrEMFWXKE0d)
 * Grupo Oficial [`¡Click aquí!`](https://chat.whatsapp.com/GeMUm4iACPPKRPrKBRKM8c)
