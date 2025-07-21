@@ -8,9 +8,9 @@ let handler = async (m, { conn, args }) => {
         return conn.reply(m.chat, `Uso: *#carrerabot <nivel>*\n\n*Niveles disponibles:*\n1 - Fácil\n2 - Medio\n3 - Difícil`, m);
 
     const dificultad = {
-        1: { userProb: 0.75, botProb: 0.75, recompensa: 100, costo: 10 },
-        2: { userProb: 0.70, botProb: 0.80, recompensa: 200, costo: 15 },
-        3: { userProb: 0.60, botProb: 0.90, recompensa: 400, costo: 20 }
+        1: { userProb: 0.75, botProb: 0.75, recompensa: 100, costo: 10, penalizacion: 50 },
+        2: { userProb: 0.70, botProb: 0.80, recompensa: 200, costo: 15, penalizacion: 100 },
+        3: { userProb: 0.60, botProb: 0.90, recompensa: 500, costo: 20, penalizacion: 250 }
     }[nivel];
 
     // Ver autos disponibles con suficientes usos
@@ -59,8 +59,9 @@ let handler = async (m, { conn, args }) => {
                     text: `🏆 ¡Ganaste contra el bot en nivel ${nivel} con tu *${seleccion}*! +${dificultad.recompensa} monedas 💰`
                 });
             } else {
+                user.coin = Math.max(0, user.coin - dificultad.penalizacion);
                 await conn.sendMessage(m.chat, {
-                    text: `💨 El bot te ganó esta vez en nivel ${nivel}... ¡Inténtalo de nuevo! 😢`
+                    text: `💨 El bot te ganó en nivel ${nivel}... Perdiste ${dificultad.penalizacion} monedas 😢`
                 });
             }
         }
