@@ -1,5 +1,7 @@
 import { promises as fs } from 'fs';
 
+global.seleccionDeAuto = global.seleccionDeAuto || {}; // Estructura global
+
 let handler = async (m, { conn }) => {
     const emoji = '🏁';
     const target = m.mentionedJid?.[0];
@@ -15,18 +17,18 @@ let handler = async (m, { conn }) => {
     if (!d1.length || !d2.length) return conn.reply(m.chat, `🚫 Ambos corredores necesitan al menos 1 auto con 10 usos.`, m);
 
     // Pedir auto al primer jugador
-    let auto1 = await askSelection(conn, m.chat, m.sender, d1);
-    if (!auto1) return conn.reply(m.chat, `⏱️ Tiempo agotado. Carrera cancelada.`, m);
+    let auto1 = await pedirSeleccion(conn, m.chat, m.sender, d1);
+    if (!auto1) return conn.reply(m.chat, `⏱️ Tiempo agotado para el primer corredor. Carrera cancelada.`, m);
 
     // Pedir auto al segundo jugador
-    let auto2 = await askSelection(conn, m.chat, target, d2);
-    if (!auto2) return conn.reply(m.chat, `⏱️ Tiempo agotado. Carrera cancelada.`, m);
+    let auto2 = await pedirSeleccion(conn, m.chat, target, d2);
+    if (!auto2) return conn.reply(m.chat, `⏱️ Tiempo agotado para el segundo corredor. Carrera cancelada.`, m);
 
     // Restar 10 usos
     u1[auto1] -= 10;
     u2[auto2] -= 10;
 
-    // Enviar mensaje inicial de carrera
+    // Carrera
     let progress = {
         [m.sender]: 0,
         [target]: 0
@@ -69,34 +71,23 @@ let handler = async (m, { conn }) => {
     }, 1000);
 };
 
-async function askSelection(conn, chatId, userId, opciones) {
+// Nueva función para pedir selección usando comandos separados
+async function pedirSeleccion(conn, chatId, userId, opciones) {
     return new Promise(async (resolve) => {
-        let autoTexto = opciones.map(opt => `• ${opt}`).join('\n');
-        const msg = await conn.sendMessage(chatId, {
-            text: `🚘 @${userId.split('@')[0]}, responde con el nombre del auto que usarás:\n\n${autoTexto}`,
+        let textoOpciones = opciones.map(o => `#${o}`).join('\n');
+        await conn.sendMessage(chatId, {
+            text: `🚘 @${userId.split('@')[0]}, elige tu vehículo usando uno de estos comandos:\n\n${textoOpciones}`,
             mentions: [userId]
         });
 
-        const handler = async (res) => {
-            if (res.chat === chatId && res.sender === userId && opciones.includes(res.text.toLowerCase())) {
-                conn.ev.off('messages.upsert', listener);
-                resolve(res.text.toLowerCase());
-            }
+        global.seleccionDeAuto[userId] = {
+            opciones,
+            resolve,
+            timeout: setTimeout(() => {
+                delete global.seleccionDeAuto[userId];
+                resolve(null);
+            }, 30000)
         };
-
-        const listener = ({ messages }) => {
-            if (!messages || !messages[0]) return;
-            const res = messages[0];
-            handler(res);
-        };
-
-        conn.ev.on('messages.upsert', listener);
-
-        // Timeout de 30 segundos
-        setTimeout(() => {
-            conn.ev.off('messages.upsert', listener);
-            resolve(null);
-        }, 30000);
     });
 }
 
