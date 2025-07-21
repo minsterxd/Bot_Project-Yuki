@@ -5,7 +5,7 @@ import path from 'path';
 let handler = async (m, { conn, text }) => {
   if (!text) return conn.reply(m.chat, '🧩 Proporciona un enlace de YouTube.', m);
 
-  let output = `/tmp/audio_${Date.now()}.mp3`;
+  let output = `./downloads/audio_${Date.now()}.mp3`;
 
   m.reply('🎧 Procesando descarga local...');
 
