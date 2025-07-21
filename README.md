@@ -13,6 +13,20 @@
 ### **`❕️ Información importante`**
 
 <details>
+ <summary><b> ➮ Cambios respecto a la bot original</b></summary>
+
+> Bot en desarrollo si presenta alguna falla reportar al creador para darle una solución óptima.
+
+- Sistema de #help mejorado.
+  > Algunos usuarios presentaban problemas en cuanto a poder vizualizar el mensaje de #help en sus dispositivos, y en esta versión modificada de la bot se hizo un cambio para que pueda ser vizualizado el menú por completo, independientemente del dispositivo del usuario.
+- Se reorganizó el #help.
+  > Se reorganizaron con el fin de no saturar tanto con un simple mensaje, y ayudando a la organización de la información.
+- Se integro un sistema de coches.
+  > Ahora es posible el poder comprar vehículos con la moneda de la bot (Yenes), se puede ver la información acerca de los vehículos y también se puede hacer drifting.
+
+</details>
+
+<details>
  <summary><b> ➮ Info • Bot</b></summary>
 
 * Este proyecto **no está afiliado de ninguna manera** con `WhatsApp`, `Inc. WhatsApp` es una marca registrada de `WhatsApp LLC`, y este bot es un **desarrollo independiente** que **no tiene ninguna relación oficial con la compañía**.
