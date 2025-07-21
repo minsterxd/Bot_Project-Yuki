@@ -23,7 +23,7 @@
   > Se reorganizaron con el fin de no saturar tanto con un simple mensaje, y ayudando a la organización de la información.
 - Se integro un sistema de coches.
   > Ahora es posible el poder comprar vehículos con la moneda de la bot (Yenes), se puede ver la información acerca de los vehículos y también se puede hacer drifting.
-- Se rehízo el comando de #ytmp3.
+- Se rehízo el comando de #ytmp3 (tambien el comando #ytmp4).
   > El comando anteriormente presentaba fallas, y se rehízo desde cero.
 
 </details>
