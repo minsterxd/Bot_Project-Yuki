@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
 import { promisify } from 'util';
-import ytdl from 'ytdl-core';
+import ytdl from '@distube/ytdl-core';
 
 const execAsync = promisify(exec);
 
