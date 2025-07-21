@@ -5,7 +5,7 @@ import path from 'path';
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   const url = args[0];
   const opt = args[1]?.toLowerCase(); // 'audio', 'video', o vacío
-  const tempDir = '/tmp'; // Puedes cambiarlo
+  const tempDir = './downloads/botsaaa/'; // Puedes cambiarlo
   const id = Date.now();
   const base = `${tempDir}/media_${id}`;
   const supported = /youtu\.?be|tiktok\.com|instagram\.com|facebook\.com|fb\.watch/;
