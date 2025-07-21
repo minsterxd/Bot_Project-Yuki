@@ -23,8 +23,6 @@
   > Se reorganizaron con el fin de no saturar tanto con un simple mensaje, y ayudando a la organización de la información.
 - Se integro un sistema de coches.
   > Ahora es posible el poder comprar vehículos con la moneda de la bot (Yenes), se puede ver la información acerca de los vehículos y también se puede hacer drifting.
-- Se añadió un comando (#dl-auto).
-  > Este comando funciona para descargar videos de algunas plataformas, sin necesidad de cambiar siempre el comando de descarga. (plataformas admitidas: TikTok, YouTube, Facebook y Instagram en un solo comando.)
 
 </details>
 
