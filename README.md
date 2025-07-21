@@ -30,6 +30,7 @@
  <summary><b> ➮ Cosas que se esperan añadir</b></summary>
 
 - Un comando para poder pasar la experiencia de un usuario a otro, similar al #transfer pero para XP.
+- Mejorar los comandos de descarga de contenido (audios, videos, etc.).
 - Mas coches, y entre otros vehículos.
 - Sistema de viviendas y propiedades.
 - Un garaje para poder ver la lista de vehículos y su estado general.
