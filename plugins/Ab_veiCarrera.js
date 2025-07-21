@@ -1,96 +1,109 @@
 import { promises as fs } from 'fs';
 
 let handler = async (m, { conn }) => {
-  const cancelTimeout = 30000;
-  const tickDelay = 1000;
-  const totalTicks = 10;
-  const emoji = '🏁';
+    const emoji = '🏁';
+    const target = m.mentionedJid?.[0];
+    if (!target) return conn.reply(m.chat, `${emoji} Mencioná a quién deseas desafiar con *#carrera @usuario*`, m);
 
-  const a = m.sender;
-  const b = m.mentionedJid?.[0];
-  if (!b) return conn.reply(m.chat, `${emoji} Mencioná a tu rival: #carrera @usuario`, m);
+    const u1 = global.db.data.users[m.sender];
+    const u2 = global.db.data.users[target];
+    if (!u1 || !u2) return conn.reply(m.chat, `${emoji} Ambos usuarios deben existir en la base de datos.`, m);
 
-  const uA = global.db.data.users[a];
-  const uB = global.db.data.users[b];
-  if (!uA || !uB) return conn.reply(m.chat, `${emoji} Ambos usuarios deben estar registrados.`, m);
+    const disponibles = (u) => ['mclaren720s', 'ferrari488pista', 'lamboavesvj'].filter(k => (u[k] || 0) >= 10);
+    const d1 = disponibles(u1), d2 = disponibles(u2);
 
-  const have10 = u => ((u.mclaren720s||0)>=10||(u.ferrari488pista||0)>=10||(u.lamboavesvj||0)>=10);
-  if (!have10(uA) || !have10(uB)) return conn.reply(m.chat, `${emoji} Ambos deben tener un auto con al menos 10 usos.`, m);
+    if (!d1.length || !d2.length) return conn.reply(m.chat, `🚫 Ambos corredores necesitan al menos 1 auto con 10 usos.`, m);
 
-  // ✔ Pedir selección de auto
-  const autosUsr = u => {
-    const arr = [];
-    if ((u.mclaren720s || 0) >= 10) arr.push("McLaren720s");
-    if ((u.ferrari488pista || 0) >= 10) arr.push("Ferrari488Pista");
-    if ((u.lamboavesvj || 0) >= 10) arr.push("LamboAventadorSVJ");
-    return arr;
-  };
-  const selA = await askForAuto(a, autosUsr(uA));
-  if (!selA) return conn.reply(m.chat, `${emoji} @${a.split('@')[0]} no seleccionó auto a tiempo, carrera cancelada.`, m);
-  const selB = await askForAuto(b, autosUsr(uB));
-  if (!selB) return conn.reply(m.chat, `${emoji} @${b.split('@')[0]} no seleccionó auto a tiempo, carrera cancelada.`, m);
+    // Pedir auto al primer jugador
+    let auto1 = await askSelection(conn, m.chat, m.sender, d1);
+    if (!auto1) return conn.reply(m.chat, `⏱️ Tiempo agotado. Carrera cancelada.`, m);
 
-  // ✔ Comenzar carrera
-  uA[selA] -= 10;
-  uB[selB] -= 10;
+    // Pedir auto al segundo jugador
+    let auto2 = await askSelection(conn, m.chat, target, d2);
+    if (!auto2) return conn.reply(m.chat, `⏱️ Tiempo agotado. Carrera cancelada.`, m);
 
-  let pA = 0, pB = 0;
-  let mId = null;
+    // Restar 10 usos
+    u1[auto1] -= 10;
+    u2[auto2] -= 10;
 
-  const bar = v => `[${'='.repeat(v)}${'-'.repeat(totalTicks - v)}] ${v * 10}%`;
+    // Enviar mensaje inicial de carrera
+    let progress = {
+        [m.sender]: 0,
+        [target]: 0
+    };
 
-  const initMsg = await conn.sendMessage(m.chat, {
-    text:
-`${emoji} Carrera entre @${a.split('@')[0]} y @${b.split('@')[0]} usando *${selA}* vs *${selB}*.
-  
-Corredor A: ${bar(pA)}
-Corredor B: ${bar(pB)}`,
-  }, { mentions: [a, b] });
-
-  mId = initMsg.key;
-
-  // ✔ Ciclo de carrera en interval
-  const interval = setInterval(async () => {
-    if (Math.random() < 0.75 && pA < totalTicks) pA++;
-    if (Math.random() < 0.75 && pB < totalTicks) pB++;
-
-    await conn.sendMessage(m.chat, {
-      edit: mId,
-      text:
-`${emoji} Carrera en progreso...
-
-Corredor A: ${bar(pA)}
-Corredor B: ${bar(pB)}`,
+    let msg = await conn.sendMessage(m.chat, {
+        text: `🚦 ¡Carrera comenzando!\n\n@${m.sender.split('@')[0]}: [----------] 0%\n@${target.split('@')[0]}: [----------] 0%`,
+        mentions: [m.sender, target]
     });
 
-    if (pA >= totalTicks || pB >= totalTicks) {
-      clearInterval(interval);
-      const winner = pA >= totalTicks ? a : b;
-      const loser = winner === a ? b : a;
-      global.db.data.users[winner].coin += 100;
-      global.db.data.users[loser].coin -= 50;
+    let interval = setInterval(async () => {
+        if (Math.random() < 0.75 && progress[m.sender] < 10) progress[m.sender]++;
+        if (Math.random() < 0.75 && progress[target] < 10) progress[target]++;
 
-      await conn.sendMessage(m.chat, {
-        text: `🏆 ¡@${winner.split('@')[0]} gana la carrera! Recibe 50 monedas del rival y 50 del bot.`,
-      }, { mentions: [winner] });
-    }
-  }, tickDelay);
+        let bar1 = `[${'='.repeat(progress[m.sender])}${'-'.repeat(10 - progress[m.sender])}] ${progress[m.sender] * 10}%`;
+        let bar2 = `[${'='.repeat(progress[target])}${'-'.repeat(10 - progress[target])}] ${progress[target] * 10}%`;
 
-  // Función interna para pedir auto
-  async function askForAuto(userJID, options) {
-    await conn.sendMessage(userJID, { text: `Elige auto para la carrera: ${options.join(', ')}` });
-    try {
-      const res = await conn.awaitMessage(userJID, cancelTimeout, msg =>
-        options.includes(msg.text.trim())
-      );
-      return res.text.trim();
-    } catch {
-      return null;
-    }
-  }
+        let texto = `🏁 Carrera en progreso...\n\n@${m.sender.split('@')[0]}: ${bar1}\n@${target.split('@')[0]}: ${bar2}`;
+
+        await conn.sendMessage(m.chat, {
+            edit: msg.key,
+            text: texto,
+            mentions: [m.sender, target]
+        });
+
+        if (progress[m.sender] >= 10 || progress[target] >= 10) {
+            clearInterval(interval);
+
+            let winner = progress[m.sender] >= 10 ? m.sender : target;
+            let loser = winner === m.sender ? target : m.sender;
+
+            global.db.data.users[winner].coin += 100;
+            global.db.data.users[loser].coin -= 50;
+
+            await conn.sendMessage(m.chat, {
+                text: `🏆 ¡@${winner.split('@')[0]} gana la carrera con su *${winner === m.sender ? auto1 : auto2}*!`,
+                mentions: [winner]
+            });
+        }
+    }, 1000);
 };
 
+async function askSelection(conn, chatId, userId, opciones) {
+    return new Promise(async (resolve) => {
+        let autoTexto = opciones.map(opt => `• ${opt}`).join('\n');
+        const msg = await conn.sendMessage(chatId, {
+            text: `🚘 @${userId.split('@')[0]}, responde con el nombre del auto que usarás:\n\n${autoTexto}`,
+            mentions: [userId]
+        });
+
+        const handler = async (res) => {
+            if (res.chat === chatId && res.sender === userId && opciones.includes(res.text.toLowerCase())) {
+                conn.ev.off('messages.upsert', listener);
+                resolve(res.text.toLowerCase());
+            }
+        };
+
+        const listener = ({ messages }) => {
+            if (!messages || !messages[0]) return;
+            const res = messages[0];
+            handler(res);
+        };
+
+        conn.ev.on('messages.upsert', listener);
+
+        // Timeout de 30 segundos
+        setTimeout(() => {
+            conn.ev.off('messages.upsert', listener);
+            resolve(null);
+        }, 30000);
+    });
+}
+
+handler.help = ['carrera @usuario'];
+handler.tags = ['autos', 'juegos'];
 handler.command = ['carrera'];
 handler.group = true;
 handler.register = true;
+
 export default handler;
