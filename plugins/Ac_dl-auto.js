@@ -1,11 +1,12 @@
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import axios from 'axios';
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   const url = args[0];
-  const opt = args[1]?.toLowerCase(); // 'audio', 'video', o vacío
-  const tempDir = './downloads/botsaaa/'; // Puedes cambiarlo
+  const opt = args[1]?.toLowerCase();
+  const tempDir = './downloads/botsaaa/';
   const id = Date.now();
   const base = `${tempDir}/media_${id}`;
   const supported = /youtu\.?be|tiktok\.com|instagram\.com|facebook\.com|fb\.watch/;
@@ -16,52 +17,52 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
   m.react('⏳');
 
-  const output = opt === 'audio' ? `${base}.mp3` : `${base}.%(ext)s`;
-  const ytdlpCmd = opt === 'audio'
-    ? `yt-dlp -f 'bestaudio' -x --audio-format mp3 -o "${base}.mp3" "${url}"`
-    : `yt-dlp -f 'best' -o "${output}" "${url}"`;
-
-  exec(ytdlpCmd, async (err, stdout, stderr) => {
-    if (err) {
-      // Si es TikTok y audio falla, intenta con video
-      if (/Requested format is not available/.test(stderr) && opt === 'audio') {
-        let fallbackCmd = `yt-dlp -f best -o "${base}.mp4" "${url}"`;
-        return exec(fallbackCmd, async (e2, out2, err2) => {
-          if (e2 || !fs.existsSync(`${base}.mp4`)) {
-            return conn.reply(m.chat, `❌ No se pudo descargar el video/audio.\n\n${err2}`, m);
-          }
-          await conn.sendFile(m.chat, `${base}.mp4`, 'video.mp4', '🎬 Video de TikTok (audio no disponible)', m);
-          fs.unlinkSync(`${base}.mp4`);
-          return m.react('✅');
-        });
+  try {
+    // Paso 1: obtener la URL directa del archivo
+    const cmdDetect = `yt-dlp --skip-download --print "%(url)s" "${url}"`;
+    exec(cmdDetect, async (err, stdout, stderr) => {
+      if (err || !stdout) {
+        return conn.reply(m.chat, `❌ No se pudo detectar contenido multimedia.\n${stderr || err.message}`, m);
       }
 
-      return conn.reply(m.chat, `❌ Error al descargar:\n\n${stderr || err.message}`, m);
-    }
+      const directUrl = stdout.trim();
+      const ext = path.extname(directUrl).split('?')[0].toLowerCase();
 
-    // Busca el archivo descargado
-    const files = fs.readdirSync(tempDir).filter(f => f.includes(`media_${id}`));
-    if (files.length === 0) {
-      return conn.reply(m.chat, `❌ No se encontró el archivo descargado.`, m);
-    }
+      // Paso 2: manejar imágenes directamente
+      const imageExts = ['.jpg', '.jpeg', '.png', '.webp'];
+      const audioExts = ['.mp3', '.m4a', '.ogg'];
+      const videoExts = ['.mp4', '.webm', '.mov'];
 
-    const filepath = `${tempDir}/${files[0]}`;
-    const ext = path.extname(filepath).toLowerCase();
+      const filepath = `${base}${ext}`;
+      const writer = fs.createWriteStream(filepath);
 
-    let caption = '📎 Archivo descargado:';
+      const res = await axios({
+        method: 'get',
+        url: directUrl,
+        responseType: 'stream'
+      });
 
-    if (['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
-      caption = '🖼 Imagen descargada:';
-    } else if (['.mp3', '.ogg', '.m4a'].includes(ext)) {
-      caption = '🎧 Audio descargado:';
-    } else if (['.mp4', '.mkv', '.webm'].includes(ext)) {
-      caption = '🎥 Video descargado:';
-    }
+      res.data.pipe(writer);
+      writer.on('finish', async () => {
+        let caption = '📎 Archivo descargado:';
 
-    await conn.sendFile(m.chat, filepath, path.basename(filepath), caption, m);
-    fs.unlinkSync(filepath);
-    m.react('✅');
-  });
+        if (imageExts.includes(ext)) caption = '🖼 Imagen descargada:';
+        else if (audioExts.includes(ext)) caption = '🎧 Audio descargado:';
+        else if (videoExts.includes(ext)) caption = '🎥 Video descargado:';
+
+        await conn.sendFile(m.chat, filepath, path.basename(filepath), caption, m);
+        fs.unlinkSync(filepath);
+        return m.react('✅');
+      });
+
+      writer.on('error', e => {
+        return conn.reply(m.chat, `❌ Error al guardar el archivo.\n${e.message}`, m);
+      });
+    });
+
+  } catch (e) {
+    return conn.reply(m.chat, `❌ Error inesperado:\n${e.message}`, m);
+  }
 };
 
 handler.command = ['dl-auto', 'dlaut'];
