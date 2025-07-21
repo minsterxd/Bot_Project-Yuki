@@ -24,5 +24,5 @@ try {
 });
 };
 
-handler.command = ['ytlocal', 'ytaudio'];
+handler.command = ['ytmp3', 'ytaudio'];
 export default handler;
