@@ -50,11 +50,15 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 
 \`『 Misceláneo 』\`
 
-❍ Así es, tambien puedes hacer *drifting*.
+❍ Comandos.
 ᰔᩚ *#Drift_(auto)* 
 > ✦ Con este comando puedes hacer drift con cualquiera de los autos, solamente gastando un uso del total del auto.
 ᰔᩚ *#Garaje*
 > ✦ Con este comando puedes ver tus vehículos disponibles y información sobre su estado general.
+ᰔᩚ *#Carrera @usuario*
+> ✦ Juega a las carreras contra otro usuario.
+ᰔᩚ *#CarreraBot (dificultad)*
+> ✦ Juega a las carreras contra un bot. 
 `;
 let mention = conn.parseMention(txt);
 try {
