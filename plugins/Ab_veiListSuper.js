@@ -47,6 +47,14 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 > ✦ Este comando sirve para comprar tu Lamborghini Aventador SVG (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
 > ✦ Precio: 10000 Yenes
 > ✦ Color: Verde
+
+• :･ﾟ⊹˚• \`『 Misceláneo 』\` •˚⊹:･ﾟ•
+
+❍ Así es, tambien puedes hacer *drifting*.
+ᰔᩚ *#Drift_(auto)* 
+> ✦ Con este comando puedes hacer drift con cualquiera de los autos, solamente gastando un uso del total del auto.
+ᰔᩚ *#Garaje*
+> ✦ Con este comando puedes ver tus vehículos disponibles y información sobre su estado general. (en desarrollo)
 `;
 let mention = conn.parseMention(txt);
 try {
