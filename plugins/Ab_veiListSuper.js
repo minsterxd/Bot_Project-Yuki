@@ -14,11 +14,11 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 │❀ Superautos disponibles: 3 
 ╰─────────────────
 
-• :･ﾟ⊹˚• \`『  Comandos  』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『  sobre la  』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『  info  de  』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 los  super 』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『 deportivos 』\` •˚⊹:･ﾟ•
+\`『  Comandos  』\`
+\`『  sobre la  』\`
+\`『  info  de  』\`
+\`『 los  super 』\`
+\`『 deportivos 』\`
 
 ❍ Info de los superdeportivos:
 ᰔᩚ *#Info_McLaren720s*
@@ -28,11 +28,11 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 ᰔᩚ *#Info_LamboAveSVG*
 > ✦ Puedes ver una foto y la información del Lamborghini Aventador SVG.
 
-• :･ﾟ⊹˚• \`『  Comandos  』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『    para    』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『   comprar  』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『  tu super  』\` •˚⊹:･ﾟ•
-• :･ﾟ⊹˚• \`『  deportivo 』\` •˚⊹:･ﾟ•
+\`『  Comandos  』\`
+\`『    para    』\`
+\`『   comprar  』\`
+\`『  tu super  』\`
+\`『  deportivo 』\`
 
 ❍ Comprar los superdeportivos:
 ᰔᩚ *#Comprar_McLaren720s*
@@ -48,7 +48,7 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 > ✦ Precio: 10000 Yenes
 > ✦ Color: Verde
 
-• :･ﾟ⊹˚• \`『 Misceláneo 』\` •˚⊹:･ﾟ•
+\`『 Misceláneo 』\`
 
 ❍ Así es, tambien puedes hacer *drifting*.
 ᰔᩚ *#Drift_(auto)* 
