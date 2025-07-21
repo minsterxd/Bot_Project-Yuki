@@ -50,6 +50,8 @@ Crea un *Sub-Bot* con tu número utilizando *#qr* o *#code*
 > ✦ Comandos de reacciones de anime.
 ᰔᩚ *#ListaJuegos*
 > ✦ Comandos de juegos para jugar con tus amigos.
+ᰔᩚ *#ListaSuperautos*
+> ✦ Comandos para poder ver información acerca del sistema de vehículos de la bot.
 `;
 let mention = conn.parseMention(txt);
 try {
