@@ -32,6 +32,7 @@
 - Un comando para poder pasar la experiencia de un usuario a otro, similar al #transfer pero para XP.
 - Mas coches, y entre otros vehículos.
 - Sistema de viviendas y propiedades.
+- Un garage para poder ver la lista de vehículos y su estado general.
 
 </details>
 
