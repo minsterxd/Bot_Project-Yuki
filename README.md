@@ -1,5 +1,12 @@
 <h1 align="center">✦ Yυƙι Sυσυ ✦</h1>
 
+> Fork de Yυƙι Sυσυ (by The-King-Destroy). Proyecto llevado a cabo por Minsterxd.
+----
+> Este proyecto esta en desarrollo y todavía no tiene versiones estables.
+----
+> Nadie (ni The-King-Destroy o Minsterxd) se hace cargo de posibles errores al ejecutar el bot.
+----
+
  <img src= "https://files.catbox.moe/om9jai.jpg">
     </p>
 
@@ -117,9 +124,12 @@ npm start
 
 <details>
 <summary><b> ✰ Contáctos</b></summary>
+ 
+> No se pongan en contacto con el creador original en caso de que este bot falle, el no se encarga de eso.
 
-* WhatsApp: [`Aquí`](https://wa.me/522202410659)
-* Correo: [`Aquí`](thekingdestroy507@gmail.com)
+* WhatsApp de The-King-Destroy: [`Aquí`](https://wa.me/522202410659)
+* Correo de The-King-Destroy: [`Aquí`](thekingdestroy507@gmail.com)
+* WhatsApp de Minsterxd: [`Aquí`](https://wa.me/5493743598594)
 
 </details>
 
