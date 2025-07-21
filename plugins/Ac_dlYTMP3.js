@@ -5,11 +5,11 @@ import path from 'path';
 let handler = async (m, { conn, text }) => {
 if (!text) return conn.reply(m.chat, '🧩 Proporciona un enlace de YouTube.', m);
 
-let output = ./downloads/botsaaa/audio_${Date.now()}.mp3;
+let output = `./downloads/botsaaa/audio_${Date.now()}.mp3`;
 
 m.reply('🎧 Procesando descarga local...');
 
-exec(yt-dlp -x --audio-format mp3 -o "${output}" "${text}", async (err, stdout, stderr) => {
+exec(`yt-dlp -x --audio-format mp3 -o "${output}" "${text}"`, async (err, stdout, stderr) => {
 if (err) {
 return conn.reply(m.chat, '❌ Error al descargar el audio:\n\n' + stderr, m);
 }
