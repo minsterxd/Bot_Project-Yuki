@@ -7,7 +7,7 @@ if (!text) return conn.reply(m.chat, '🧩 Proporciona un enlace de YouTube.', m
 
 let output = `./downloads/botsaaa/audio_${Date.now()}.mp3`;
 
-m.reply('🎧 Procesando descarga local...');
+m.reply('🎧 Empezando a descargar...');
 
 exec(`yt-dlp -x --audio-format mp3 -o "${output}" "${text}"`, async (err, stdout, stderr) => {
 if (err) {
