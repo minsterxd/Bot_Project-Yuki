@@ -17,22 +17,41 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
   m.react('⏳');
 
+  // Asegurar directorio temporal
+  if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir, { recursive: true });
+
   try {
-    // Paso 1: obtener la URL directa del archivo
     const cmdDetect = `yt-dlp --skip-download --print "%(url)s" "${url}"`;
     exec(cmdDetect, async (err, stdout, stderr) => {
-      if (err || !stdout) {
-        return conn.reply(m.chat, `❌ No se pudo detectar contenido multimedia.\n${stderr || err.message}`, m);
+      let directUrl = stdout?.trim();
+
+      // Si yt-dlp falla y la plataforma es IG o FB, intentar scraping para imagen
+      if ((!directUrl || err) && /instagram\.com|facebook\.com|fb\.watch/.test(url)) {
+        try {
+          const htmlRes = await axios.get(url, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0',
+              'Accept-Language': 'es-ES,es;q=0.9'
+            }
+          });
+
+          const html = htmlRes.data;
+          const match = html.match(/<meta property="og:image" content="(.*?)"/);
+          if (!match) {
+            return conn.reply(m.chat, `❌ No se pudo detectar contenido multimedia.\n${stderr || err?.message || 'Sin URL válida.'}`, m);
+          }
+
+          directUrl = match[1];
+        } catch (scrapeError) {
+          return conn.reply(m.chat, `❌ No se pudo detectar contenido multimedia.\n${scrapeError.message}`, m);
+        }
       }
 
-      const directUrl = stdout.trim();
+      if (!directUrl) {
+        return conn.reply(m.chat, `❌ No se pudo detectar contenido multimedia.\n${stderr || err?.message || 'Sin respuesta válida.'}`, m);
+      }
+
       const ext = path.extname(directUrl).split('?')[0].toLowerCase();
-
-      // Paso 2: manejar imágenes directamente
-      const imageExts = ['.jpg', '.jpeg', '.png', '.webp'];
-      const audioExts = ['.mp3', '.m4a', '.ogg'];
-      const videoExts = ['.mp4', '.webm', '.mov'];
-
       const filepath = `${base}${ext}`;
       const writer = fs.createWriteStream(filepath);
 
@@ -45,6 +64,9 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       res.data.pipe(writer);
       writer.on('finish', async () => {
         let caption = '📎 Archivo descargado:';
+        const imageExts = ['.jpg', '.jpeg', '.png', '.webp'];
+        const audioExts = ['.mp3', '.m4a', '.ogg'];
+        const videoExts = ['.mp4', '.webm', '.mov'];
 
         if (imageExts.includes(ext)) caption = '🖼 Imagen descargada:';
         else if (audioExts.includes(ext)) caption = '🎧 Audio descargado:';
