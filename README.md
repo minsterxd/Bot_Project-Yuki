@@ -99,6 +99,10 @@ npm install
 ```
 
 ```bash
+npm install jimp
+```
+
+```bash
 npm update
 ```
 
