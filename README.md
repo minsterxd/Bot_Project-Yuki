@@ -15,7 +15,7 @@
 <details>
  <summary><b> ➮ Cambios respecto a la bot original</b></summary>
 
-> Bot en desarrollo si presenta alguna falla reportar al creador para darle una solución óptima.
+> Este bot esta en desarrollo. En caso de presentar una falla, puede comunicarse al WhatsApp y se le intentará dar solución al problema.
 
 - Sistema de #help mejorado.
   > Algunos usuarios presentaban problemas en cuanto a poder vizualizar el mensaje de #help en sus dispositivos, y en esta versión modificada de la bot se hizo un cambio para que pueda ser vizualizado el menú por completo, independientemente del dispositivo del usuario.
