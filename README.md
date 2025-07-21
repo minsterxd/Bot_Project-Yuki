@@ -55,7 +55,7 @@ apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 
 ```bash
-git clone https://github.com/The-King-Destroy/Yuki_Suou-Bot && cd Yuki_Suou-Bot
+git clone https://github.com/minsterxd/Bot_Project-Yuki && cd Bot_Project-Yuki
 ```
 
 ```bash
@@ -73,6 +73,8 @@ npm update
 ```bash
 npm start
 ```
+
+> Los comandos "yarn install" y "npm install" son necesarios solamente al encender a la bot la primera vez, luego son opcionales, y no son necesarios para que la bot encienda correctamente.
 
 > Si aparece (Y/I/N/O/D/Z) [default=N] ? use la letra "y" + "ENTER" para continuar con la instalación
 
