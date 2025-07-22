@@ -37,10 +37,34 @@ global.db.data.users[m.sender] = {}
 if (user) {
 if (!isNumber(user.mclaren720s))
 user.mclaren720s = 0
+if (!isNumber(user.mclaren720sMotor))
+user.mclaren720sMotor = 0
+if (!isNumber(user.mclaren720sAgarre))
+user.mclaren720sAgarre = 0
+if (!isNumber(user.mclaren720sTurbo))
+user.mclaren720sTurbo = 0
+if (!isNumber(user.mclaren720sNitro))
+user.mclaren720sNitro = 0
 if (!isNumber(user.ferrari488pista))
 user.ferrari488pista = 0
+if (!isNumber(user.ferrari488pistaMotor))
+user.ferrari488pistaMotor = 0
+if (!isNumber(user.ferrari488pistaAgarre))
+user.ferrari488pistaAgarre = 0
+if (!isNumber(user.ferrari488pistaTurbo))
+user.ferrari488pistaTurbo = 0
+if (!isNumber(user.ferrari488pistaNitro))
+user.ferrari488pistaNitro = 0
 if (!isNumber(user.lamboavesvj))
 user.lamboavesvj = 0
+if (!isNumber(user.lamboavesvjMotor))
+user.lamboavesvjMotor = 0
+if (!isNumber(user.lamboavesvjAgarre))
+user.lamboavesvjAgarre = 0
+if (!isNumber(user.lamboavesvjTurbo))
+user.lamboavesvjTurbo = 0
+if (!isNumber(user.lamboavesvjNitro))
+user.lamboavesvjNitro = 0
 if (!isNumber(user.exp))
 user.exp = 0
 if (!isNumber(user.coin))
@@ -118,8 +142,20 @@ global.db.data.users[m.sender] = {
 exp: 0,
 coin: 100000,
 mclaren720s: 0,
+mclaren720sMotor: 0,
+mclaren720sAgarre: 0,
+mclaren720sTurbo: 0,
+mclaren720sNitro: 0,
 ferrari488pista: 0,
+ferrari488pistaMotor: 0,
+ferrari488pistaAgarre: 0,
+ferrari488pistaTurbo: 0,
+ferrari488pistaNitro: 0,
 lamboavesvj: 0,
+lamboavesvjMotor: 0,
+lamboavesvjAgarre: 0,
+lamboavesvjTurbo: 0,
+lamboavesvjNitro: 0,
 joincount: 1,
 diamond: 3,
 lastadventure: 0,
