@@ -7,6 +7,10 @@ let handler = async (m, { conn }) => {
 
   // Transferir monedas y eliminar el auto (lo pone en 0 usos)
   user.coin += valor;
+  user[vehiculo + 'Motor'] = 0;
+  user[vehiculo + 'Agarre'] = 0;
+  user[vehiculo + 'Turbo'] = 0;
+  user[vehiculo + 'Nitro'] = 0;
   user[vehiculo] = 0;
   delete global.ventaAutos[m.sender];
 
