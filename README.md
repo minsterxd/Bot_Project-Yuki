@@ -32,10 +32,7 @@
  <summary><b> ➮ Cosas que se esperan añadir</b></summary>
 
 - Un comando para poder pasar la experiencia de un usuario a otro, similar al #transfer pero para XP.
-- Mas coches, y entre otros vehículos.
 - Sistema de viviendas y propiedades.
-- Un sistema de mejoras para los vehículos.
-- Mejorar el sistema de compra de los vehículos.
 
 </details>
 
