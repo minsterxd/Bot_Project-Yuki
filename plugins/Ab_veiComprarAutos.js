@@ -6,9 +6,9 @@ let handler = async (m, { conn }) => {
     if (!user) return conn.reply(m.chat, '🚫 Usuario no encontrado.', m);
 
     const todosAutos = {
-        mclaren720s: { nombre: 'McLaren 720s', color: 'Naranja', precio: 20000, img: './src/autos/super/McLaren720s.jpg' },
-        ferrari488pista: { nombre: 'Ferrari 488 Pista', color: 'Rojo', precio: 20000, img: './src/autos/super/Ferrari488Pista.jpg' },
-        lamboavesvj: { nombre: 'Lamborghini Aventador SVG', color: 'Verde', precio: 20000, img: './src/autos/super/LamboAveSVJ.jpg' },
+        mclaren720s: { nombre: 'McLaren 720s', color: 'Naranja', precio: 30000, img: './src/autos/super/McLaren720s.jpg' },
+        ferrari488pista: { nombre: 'Ferrari 488 Pista', color: 'Rojo', precio: 30000, img: './src/autos/super/Ferrari488Pista.jpg' },
+        lamboavesvj: { nombre: 'Lamborghini Aventador SVG', color: 'Verde', precio: 30000, img: './src/autos/super/LamboAveSVJ.jpg' },
     };
 
     const disponibles = Object.entries(todosAutos)
