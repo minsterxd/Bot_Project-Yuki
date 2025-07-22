@@ -33,6 +33,7 @@
 
 - Un comando para poder pasar la experiencia de un usuario a otro, similar al #transfer pero para XP.
 - Sistema de viviendas y propiedades.
+- Un sistema de reinos al estilo RPG.
 
 </details>
 
