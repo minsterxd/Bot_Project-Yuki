@@ -24,7 +24,7 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 ᰔᩚ *#Drift* 
 > ✦ Con este comando puedes hacer drift con cualquiera de los autos, solamente gastando un uso del total del auto.
 ᰔᩚ *#Garaje*
-> ✦ Con este comando puedes ver tus vehículos disponibles y información sobre su estado general.
+> ✦ Con este comando puedes ver tus vehículos disponibles, información sobre su estado general y sus mejoras.
 ᰔᩚ *#Carrera @usuario*
 > ✦ Juega a las carreras contra otro usuario.
 ᰔᩚ *#CarreraBot (dificultad)*
