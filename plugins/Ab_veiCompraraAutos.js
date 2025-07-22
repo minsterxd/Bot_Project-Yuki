@@ -8,7 +8,7 @@ let handler = async (m, { conn }) => {
     const todosAutos = {
         mclaren720s: { nombre: 'McLaren 720s', color: 'Naranja', precio: 20000, img: './src/autos/super/McLaren720s.jpg' },
         ferrari488pista: { nombre: 'Ferrari 488 Pista', color: 'Rojo', precio: 20000, img: './src/autos/super/Ferrari488Pista.jpg' },
-        lamboavesvj: { nombre: 'Lamborghini Aventador SVG', color: 'Verde', precio: 10000, img: './src/autos/super/LamboAveSVJ.jpg' },
+        lamboavesvj: { nombre: 'Lamborghini Aventador SVG', color: 'Verde', precio: 20000, img: './src/autos/super/LamboAveSVJ.jpg' },
     };
 
     const disponibles = Object.entries(todosAutos)
@@ -30,7 +30,7 @@ let handler = async (m, { conn }) => {
 
     await conn.sendMessage(m.chat, {
         image: menuImage,
-        caption: `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧\nVeo que quieres comprar tu primer superdeportivo, eh? \nAqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆\n╭┈ ↷\n│ᰔ Cliente » @${m.sender.split('@')[0]}\n│❀ Superdeportivos disponibles: ${disponibles.length} \n╰─────────────────\n\n❍ Comprar los superdeportivos:\n${lista}\n\nᰔ Responde a este mensaje con el comando del auto que deseas para comprarlo.`,
+        caption: `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧\nVeo que quieres comprar tu superdeportivo, eh? \nAqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆\n╭┈ ↷\n│ᰔ Cliente » @${m.sender.split('@')[0]}\n│❀ Superdeportivos disponibles: ${disponibles.length} \n╰─────────────────\n\n❍ Comprar los superdeportivos:\n${lista}\n\nᰔ Responde a este mensaje con el comando del auto que deseas para comprarlo.`,
         mentions: [m.sender]
     });
 
