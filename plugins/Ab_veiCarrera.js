@@ -74,10 +74,15 @@ let handler = async (m, { conn }) => {
 // Nueva función para pedir selección usando comandos separados
 async function pedirSeleccion(conn, chatId, userId, opciones) {
     return new Promise(async (resolve) => {
-        let textoOpciones = opciones.map(o => `#${o}`).join('\n');
         await conn.sendMessage(chatId, {
-            text: `🚘 @${userId.split('@')[0]}, elige tu vehículo usando uno de estos comandos:\n\n${textoOpciones}`,
-            mentions: [userId]
+            text: `🚘 @${userId.split('@')[0]}, elige tu vehículo tocando uno de los botones:`,
+            mentions: [userId],
+            buttons: opciones.map(nombre => ({
+                buttonId: `#${nombre}`,
+                buttonText: { displayText: `🚗 ${nombre}` },
+                type: 1
+            })),
+            headerType: 1
         });
 
         global.seleccionDeAuto[userId] = {
@@ -90,7 +95,6 @@ async function pedirSeleccion(conn, chatId, userId, opciones) {
         };
     });
 }
-
 handler.help = ['carrera @usuario'];
 handler.tags = ['autos', 'juegos'];
 handler.command = ['carrera'];
