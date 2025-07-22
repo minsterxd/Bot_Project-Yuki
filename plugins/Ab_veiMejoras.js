@@ -8,25 +8,25 @@ let handler = async (m, { conn, args }) => {
             key: 'Motor',
             max: 10,
             precio: 500,
-            efecto: '0.5% por mejora (total 5%) en cada parte de la carrera.'
+            efecto: '1% por mejora (total 5%) en cada parte de la carrera.'
         },
         agarre: {
             key: 'Agarre',
             max: 10,
             precio: 500,
-            efecto: '0.5% por mejora (total 5%) en cada parte de la carrera.'
+            efecto: '1% por mejora (total 5%) en cada parte de la carrera.'
         },
         turbo: {
             key: 'Turbo',
             max: 10,
             precio: 250,
-            efecto: '0.25% por mejora (total 2.5%) en cada parte de la carrera.'
+            efecto: '0.5% por mejora (total 2.5%) en cada parte de la carrera.'
         },
         nitro: {
             key: 'Nitro',
             max: 5,
             precio: 1000,
-            efecto: '1% por mejora (total 5%) desde mitad de carrera durante 3 turnos.'
+            efecto: '2% por mejora (total 5%) desde mitad de carrera durante 3 turnos.'
         }
     };
 
