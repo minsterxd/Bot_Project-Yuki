@@ -42,7 +42,7 @@ let handler = async (m, { conn }) => {
       global.ventaAutos[m.sender] = { vehiculo: seleccion, valor };
 
       await conn.sendMessage(m.chat, {
-        text: `💰 Tu *${seleccion}* tiene ${usos} usos restantes.\nValor de venta: *${valor}* monedas.\nPara confirmar, escribe *#confirmarventa* dentro de 30 s.`,
+        text: `💰 Tu *${seleccion}* tiene ${usos} usos restantes.\nValor base: *${valorBase}* monedas.\n🔧 Valor por mejoras: *${valorMejoras}* monedas.\n📦 Total de venta: *${valor}* monedas.\n\nPara confirmar, escribe *#confirmarventa* dentro de 30 s.`,
         mentions: [m.sender]
       });
 
