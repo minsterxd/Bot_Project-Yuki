@@ -14,44 +14,14 @@ Aqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆
 │❀ Superautos disponibles: 3 
 ╰─────────────────
 
-\`『  Comandos  』\`
-\`『  sobre la  』\`
-\`『  info  de  』\`
-\`『 los  super 』\`
-\`『 deportivos 』\`
-
-❍ Info de los superdeportivos:
-ᰔᩚ *#Info_McLaren720s*
-> ✦ Puedes ver una foto y la información del McLaren 720s.
-ᰔᩚ *#Info_Ferrari488*
-> ✦ Puedes ver una foto y la información del Ferrari 488 Pista.
-ᰔᩚ *#Info_LamboAveSVG*
-> ✦ Puedes ver una foto y la información del Lamborghini Aventador SVG.
-
-\`『  Comandos  』\`
-\`『    para    』\`
-\`『   comprar  』\`
-\`『  tu super  』\`
-\`『  deportivo 』\`
-
-❍ Comprar los superdeportivos:
-ᰔᩚ *#Comprar_McLaren720s*
-> ✦ Este comando sirve para comprar tu McLaren 720s (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
-> ✦ Precio: 10000 Yenes
-> ✦ Color: Naranja
-ᰔᩚ *#Comprar_Ferrari488*
-> ✦ Este comando sirve para comprar tu Ferrari 488 Pista (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
-> ✦ Precio: 10000 Yenes
-> ✦ Color: Rojo
-ᰔᩚ *#Comprar_LamboAveSVG*
-> ✦ Este comando sirve para comprar tu Lamborghini Aventador SVG (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.
-> ✦ Precio: 10000 Yenes
-> ✦ Color: Verde
-
-\`『 Misceláneo 』\`
+\`『 Comandos 』\`
 
 ❍ Comandos.
-ᰔᩚ *#Drift_(auto)* 
+ᰔᩚ *#ComprarAutos* 
+> ✦ Este comando sirve para comprar tus superdeportivos favoritos.
+ᰔᩚ *#VenderAutos* 
+> ✦ Este comando sirve para vender los autos que ya no quieras utilizar. No recomendable usarlo.
+ᰔᩚ *#Drift* 
 > ✦ Con este comando puedes hacer drift con cualquiera de los autos, solamente gastando un uso del total del auto.
 ᰔᩚ *#Garaje*
 > ✦ Con este comando puedes ver tus vehículos disponibles y información sobre su estado general.
