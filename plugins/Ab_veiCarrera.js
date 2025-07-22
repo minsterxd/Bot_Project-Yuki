@@ -36,9 +36,9 @@ let handler = async (m, { conn }) => {
 
     // Bonos constantes
     const bonoConstante = ({ motor, agarre, turbo }) =>
-        (motor * 0.005) + (agarre * 0.005) + (turbo * 0.0025);
+        (motor * 0.01) + (agarre * 0.01) + (turbo * 0.005);
 
-    const nitroBonus = (nitro) => nitro * 0.01;
+    const nitroBonus = (nitro) => nitro * 0.02;
 
     const progreso = {
         [m.sender]: 0,
