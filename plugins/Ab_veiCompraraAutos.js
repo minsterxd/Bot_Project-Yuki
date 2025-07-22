@@ -1,11 +1,14 @@
+import { promises as fs } from 'fs';
+import path from 'path';
+
 let handler = async (m, { conn }) => {
     const user = global.db.data.users[m.sender];
     if (!user) return conn.reply(m.chat, '🚫 Usuario no encontrado.', m);
 
     const todosAutos = {
-        mclaren720s: { nombre: 'McLaren 720s', color: 'Naranja', precio: 20000 },
-        ferrari488pista: { nombre: 'Ferrari 488 Pista', color: 'Rojo', precio: 20000 },
-        lamboavesvj: { nombre: 'Lamborghini Aventador SVG', color: 'Verde', precio: 10000 },
+        mclaren720s: { nombre: 'McLaren 720s', color: 'Naranja', precio: 20000, img: './src/autos/super/McLaren720s.jpg' },
+        ferrari488pista: { nombre: 'Ferrari 488 Pista', color: 'Rojo', precio: 20000, img: './src/autos/super/Ferrari488Pista.jpg' },
+        lamboavesvj: { nombre: 'Lamborghini Aventador SVG', color: 'Verde', precio: 10000, img: './src/autos/super/LamboAveSVJ.jpg' },
     };
 
     const disponibles = Object.entries(todosAutos)
@@ -23,8 +26,11 @@ let handler = async (m, { conn }) => {
         `ᰔᩚ *${auto.nombre} - #${auto.id}*\n> ✦ (⁠｡⁠•̀⁠ᴗ⁠-⁠)⁠✧.\n> ✦ Precio: ${auto.precio} Yenes\n> ✦ Color: ${auto.color}`
     ).join('\n');
 
+    const menuImage = await fs.readFile('./src/menu.jpg');
+
     await conn.sendMessage(m.chat, {
-        text: `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧\nVeo que quieres comprar tu primer superdeportivo, eh? \nAqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆\n╭┈ ↷\n│ᰔ Cliente » @${m.sender.split('@')[0]}\n│❀ Superdeportivos disponibles: ${disponibles.length} \n╰─────────────────\n\n❍ Comprar los superdeportivos:\n${lista}\n\nᰔ Responde a este mensaje con el comando del auto que deseas para comprarlo.`,
+        image: menuImage,
+        caption: `Hola! Soy *ᥡᥙkі sᥙ᥆ᥙ* (｡•̀ᴗ-)✧\nVeo que quieres comprar tu primer superdeportivo, eh? \nAqui tienes la lista! (⁠◠⁠‿⁠・⁠)⁠—⁠☆\n╭┈ ↷\n│ᰔ Cliente » @${m.sender.split('@')[0]}\n│❀ Superdeportivos disponibles: ${disponibles.length} \n╰─────────────────\n\n❍ Comprar los superdeportivos:\n${lista}\n\nᰔ Responde a este mensaje con el comando del auto que deseas para comprarlo.`,
         mentions: [m.sender]
     });
 
@@ -40,7 +46,12 @@ let handler = async (m, { conn }) => {
             user.coin -= auto.precio;
             user[seleccion] = 100000;
 
-            await conn.reply(m.chat, `✅ ¡Felicidades! Has comprado un *${auto.nombre}* color *${auto.color}* con *100000* usos. ¡Conduce con estilo! 🚗`, m);
+            const autoImage = await fs.readFile(auto.img);
+            await conn.sendMessage(m.chat, {
+                image: autoImage,
+                caption: `✅ ¡Felicidades! Has comprado un *${auto.nombre}* color *${auto.color}* con *100000* usos. ¡Conduce con estilo! 🚗`,
+                mentions: [m.sender]
+            });
         },
         timeout: setTimeout(() => {
             delete global.seleccionDeAuto[m.sender];
