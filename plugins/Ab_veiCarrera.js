@@ -1,5 +1,3 @@
-import { promises as fs } from 'fs';
-
 global.seleccionDeAuto = global.seleccionDeAuto || {}; // Estructura global
 
 let handler = async (m, { conn }) => {
@@ -13,14 +11,11 @@ let handler = async (m, { conn }) => {
 
     const disponibles = (u) => ['mclaren720s', 'ferrari488pista', 'lamboavesvj'].filter(k => (u[k] || 0) >= 10);
     const d1 = disponibles(u1), d2 = disponibles(u2);
-
     if (!d1.length || !d2.length) return conn.reply(m.chat, `🚫 Ambos corredores necesitan al menos 1 auto con 10 usos.`, m);
 
-    // Pedir auto al primer jugador
     let auto1 = await pedirSeleccion(conn, m.chat, m.sender, d1);
     if (!auto1) return conn.reply(m.chat, `⏱️ Tiempo agotado para el primer corredor. Carrera cancelada.`, m);
 
-    // Pedir auto al segundo jugador
     let auto2 = await pedirSeleccion(conn, m.chat, target, d2);
     if (!auto2) return conn.reply(m.chat, `⏱️ Tiempo agotado para el segundo corredor. Carrera cancelada.`, m);
 
@@ -28,10 +23,31 @@ let handler = async (m, { conn }) => {
     u1[auto1] -= 10;
     u2[auto2] -= 10;
 
-    // Carrera
-    let progress = {
+    // Obtener mejoras para ambos jugadores
+    const stats = (user, auto) => ({
+        motor: user[`${auto}Motor`] || 0,
+        agarre: user[`${auto}Agarre`] || 0,
+        turbo: user[`${auto}Turbo`] || 0,
+        nitro: user[`${auto}Nitro`] || 0,
+    });
+
+    const stats1 = stats(u1, auto1);
+    const stats2 = stats(u2, auto2);
+
+    // Bonos constantes
+    const bonoConstante = ({ motor, agarre, turbo }) =>
+        (motor * 0.005) + (agarre * 0.005) + (turbo * 0.0025);
+
+    const nitroBonus = (nitro) => nitro * 0.01;
+
+    const progreso = {
         [m.sender]: 0,
-        [target]: 0
+        [target]: 0,
+    };
+
+    let nitro = {
+        [m.sender]: { activo: false, turnos: 0 },
+        [target]: { activo: false, turnos: 0 }
     };
 
     let msg = await conn.sendMessage(m.chat, {
@@ -40,38 +56,60 @@ let handler = async (m, { conn }) => {
     });
 
     let interval = setInterval(async () => {
-        if (Math.random() < 0.75 && progress[m.sender] < 10) progress[m.sender]++;
-        if (Math.random() < 0.75 && progress[target] < 10) progress[target]++;
+        for (let jugador of [m.sender, target]) {
+            const usuario = jugador === m.sender ? u1 : u2;
+            const auto = jugador === m.sender ? auto1 : auto2;
+            const datos = jugador === m.sender ? stats1 : stats2;
+            const baseProb = 0.75;
+            let prob = baseProb + bonoConstante(datos);
 
-        let bar1 = `[${'='.repeat(progress[m.sender])}${'-'.repeat(10 - progress[m.sender])}] ${progress[m.sender] * 10}%`;
-        let bar2 = `[${'='.repeat(progress[target])}${'-'.repeat(10 - progress[target])}] ${progress[target] * 10}%`;
+            // Activar nitro si cruzó 50% y aún no fue activado
+            if (progreso[jugador] >= 5 && !nitro[jugador].activo && datos.nitro > 0) {
+                nitro[jugador].activo = true;
+                nitro[jugador].turnos = 3;
+            }
 
-        let texto = `🏁 Carrera en progreso...\n\n@${m.sender.split('@')[0]}: ${bar1}\n@${target.split('@')[0]}: ${bar2}`;
+            // Aplicar nitro si está activo
+            if (nitro[jugador].activo && nitro[jugador].turnos > 0) {
+                prob += nitroBonus(datos.nitro);
+                nitro[jugador].turnos--;
+            }
+
+            prob = Math.min(prob, 1);
+
+            if (Math.random() < prob && progreso[jugador] < 10) progreso[jugador]++;
+        }
+
+        // Mostrar progreso
+        let bar1 = `[${'='.repeat(progreso[m.sender])}${'-'.repeat(10 - progreso[m.sender])}] ${progreso[m.sender] * 10}%`;
+        let bar2 = `[${'='.repeat(progreso[target])}${'-'.repeat(10 - progreso[target])}] ${progreso[target] * 10}%`;
 
         await conn.sendMessage(m.chat, {
             edit: msg.key,
-            text: texto,
+            text: `🏁 Carrera en progreso...\n\n@${m.sender.split('@')[0]}: ${bar1}\n@${target.split('@')[0]}: ${bar2}`,
             mentions: [m.sender, target]
         });
 
-        if (progress[m.sender] >= 10 || progress[target] >= 10) {
+        // Fin de carrera
+        if (progreso[m.sender] >= 10 || progreso[target] >= 10) {
             clearInterval(interval);
 
-            let winner = progress[m.sender] >= 10 ? m.sender : target;
+            let winner = progreso[m.sender] >= 10 ? m.sender : target;
             let loser = winner === m.sender ? target : m.sender;
+            let autoGanador = winner === m.sender ? auto1 : auto2;
 
             global.db.data.users[winner].coin += 100;
-            global.db.data.users[loser].coin -= 50;
+            global.db.data.users[loser].coin = Math.max(0, global.db.data.users[loser].coin - 50);
 
             await conn.sendMessage(m.chat, {
-                text: `🏆 ¡@${winner.split('@')[0]} gana la carrera con su *${winner === m.sender ? auto1 : auto2}*!`,
+                text: `🏆 ¡@${winner.split('@')[0]} gana la carrera con su *${autoGanador}*!`,
                 mentions: [winner]
             });
         }
     }, 1000);
 };
 
-// Nueva función para pedir selección usando comandos separados
+// Función para selección de auto
 async function pedirSeleccion(conn, chatId, userId, opciones) {
     return new Promise(async (resolve) => {
         let textoOpciones = opciones.map(o => `#${o}`).join('\n');
