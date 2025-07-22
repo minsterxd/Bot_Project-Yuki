@@ -1,22 +1,21 @@
 let handler = async (m, { conn }) => {
-    const user = global.db.data.users[m.sender];
-    const venta = global.ventaPendiente?.[m.sender];
+  const oferta = global.ventaAutos?.[m.sender];
+  if (!oferta) return conn.reply(m.chat, `🚫 No tienes ninguna oferta de venta activa.`, m);
 
-    if (!venta) return m.reply('❌ No tienes una venta pendiente.');
+  const user = global.db.data.users[m.sender];
+  const { vehiculo, valor } = oferta;
 
-    const { auto, precio, timeout } = venta;
-    clearTimeout(timeout);
-    delete global.ventaPendiente[m.sender];
+  // Transferir monedas y eliminar el auto (lo pone en 0 usos)
+  user.coin += valor;
+  user[vehiculo] = 0;
+  delete global.ventaAutos[m.sender];
 
-    delete user[auto];
-    user.coin += precio;
-
-    conn.reply(m.chat, `✅ Has vendido tu *${auto}* por *${precio} monedas*. ¡Gracias por tu negocio!`);
+  await conn.reply(m.chat, `✅ Venta confirmada: vendiste tu *${vehiculo}* por *${valor}* monedas.`);
 };
 
-handler.help = ['aceptarventa'];
-handler.tags = ['autos', 'economía'];
-handler.command = ['aceptarventa'];
+handler.help = ['confirmarventa'];
+handler.tags = ['autos'];
+handler.command = ['confirmarventa'];
 handler.group = true;
 handler.register = true;
 
