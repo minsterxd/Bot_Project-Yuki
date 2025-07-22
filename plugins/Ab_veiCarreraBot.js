@@ -31,8 +31,8 @@ let handler = async (m, { conn, args }) => {
     const turbo = user[`${seleccion}Turbo`] || 0;
     const nitro = user[`${seleccion}Nitro`] || 0;
 
-    const bonusConstante = (motor * 0.005) + (agarre * 0.005) + (turbo * 0.0025); // 0.5% = 0.005, 0.25% = 0.0025
-    const nitroBonus = nitro * 0.01; // 1% por nivel
+    const bonusConstante = (motor * 0.01) + (agarre * 0.01) + (turbo * 0.005);
+    const nitroBonus = nitro * 0.02; 
 
     let progress = {
         player: 0,
