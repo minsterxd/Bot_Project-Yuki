@@ -13,26 +13,48 @@ let handler = async (m, { conn }) => {
 
     const autos = [];
 
+    // Función auxiliar para mostrar mejoras si existen
+    const mostrarMejoras = (auto) => {
+        const motor = user[`${auto}Motor`] || 0;
+        const agarre = user[`${auto}Agarre`] || 0;
+        const turbo = user[`${auto}Turbo`] || 0;
+        const nitro = user[`${auto}Nitro`] || 0;
+
+        const mejoras = [];
+        if (motor > 0) mejoras.push(`🛠️ Motor: Nivel ${motor}`);
+        if (agarre > 0) mejoras.push(`🛞 Agarre: Nivel ${agarre}`);
+        if (turbo > 0) mejoras.push(`🚀 Turbo: Nivel ${turbo}`);
+        if (nitro > 0) mejoras.push(`🔥 Propulsión: Nivel ${nitro}`);
+
+        return mejoras.length ? mejoras.map(m => `   └ ${m}`).join('\n') : '';
+    };
+
     if (user.mclaren720s > 0) {
         let porcentaje = ((user.mclaren720s / 100000) * 100).toFixed(2);
-        autos.push(`🏎️ *McLaren 720s* » ${user.mclaren720s} usos restantes (${porcentaje}%)`);
+        let texto = `🏎️ *McLaren 720s* » ${user.mclaren720s} usos restantes (${porcentaje}%)`;
+        let mejoras = mostrarMejoras('mclaren720s');
+        autos.push(`${texto}${mejoras ? '\n' + mejoras : ''}`);
     }
 
     if (user.ferrari488pista > 0) {
         let porcentaje = ((user.ferrari488pista / 100000) * 100).toFixed(2);
-        autos.push(`🏁 *Ferrari 488 Pista* » ${user.ferrari488pista} usos restantes (${porcentaje}%)`);
+        let texto = `🏁 *Ferrari 488 Pista* » ${user.ferrari488pista} usos restantes (${porcentaje}%)`;
+        let mejoras = mostrarMejoras('ferrari488pista');
+        autos.push(`${texto}${mejoras ? '\n' + mejoras : ''}`);
     }
 
     if (user.lamboavesvj > 0) {
         let porcentaje = ((user.lamboavesvj / 100000) * 100).toFixed(2);
-        autos.push(`🔥 *Lamborghini Aventador SVJ* » ${user.lamboavesvj} usos restantes (${porcentaje}%)`);
+        let texto = `🔥 *Lamborghini Aventador SVJ* » ${user.lamboavesvj} usos restantes (${porcentaje}%)`;
+        let mejoras = mostrarMejoras('lamboavesvj');
+        autos.push(`${texto}${mejoras ? '\n' + mejoras : ''}`);
     }
 
     if (autos.length === 0) {
         return conn.reply(m.chat, `No tienes ningún vehículo comprado. 🏎️`, m);
     }
 
-    let mensaje = `🚘 *Tu garaje de autos*:\n\n${autos.join('\n')}`;
+    let mensaje = `🚘 *Tu garaje de autos*:\n\n${autos.join('\n\n')}`;
     conn.reply(m.chat, mensaje, m);
 };
 
