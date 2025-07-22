@@ -13,44 +13,76 @@ let handler = async (m, { conn, args }) => {
         3: { userProb: 0.60, botProb: 0.90, recompensa: 500, costo: 20, penalizacion: 250 }
     }[nivel];
 
-    // Ver autos disponibles con suficientes usos
+    // Autos con usos suficientes
     const autosDisponibles = ['mclaren720s', 'ferrari488pista', 'lamboavesvj'].filter(k => (user[k] || 0) >= dificultad.costo);
     if (!autosDisponibles.length)
         return conn.reply(m.chat, `🚫 No tienes autos con al menos *${dificultad.costo} usos* para este nivel de dificultad.`, m);
 
-    // Elegir auto
     const seleccion = await pedirSeleccion(conn, m.chat, m.sender, autosDisponibles);
     if (!seleccion)
         return conn.reply(m.chat, `⏱️ Tiempo agotado. Carrera cancelada.`, m);
 
-    // Descontar usos
+    // Descontar usos del auto
     user[seleccion] -= dificultad.costo;
 
-    // Inicializar carrera
+    // Obtener mejoras aplicables
+    const motor = user[`${seleccion}Motor`] || 0;
+    const agarre = user[`${seleccion}Agarre`] || 0;
+    const turbo = user[`${seleccion}Turbo`] || 0;
+    const nitro = user[`${seleccion}Nitro`] || 0;
+
+    const bonusConstante = (motor * 0.005) + (agarre * 0.005) + (turbo * 0.0025); // 0.5% = 0.005, 0.25% = 0.0025
+    const nitroBonus = nitro * 0.01; // 1% por nivel
+
     let progress = {
         player: 0,
         bot: 0
     };
 
+    let turnosDesdeMitad = 0;
+    let nitroActivo = false;
+
     let msg = await conn.sendMessage(m.chat, {
         text: `🚦 ¡Carrera contra el bot (Nivel ${nivel}) iniciada!\n\nTú: [----------] 0%\nBot 🤖: [----------] 0%`
     });
 
+    let turnos = 0;
     let interval = setInterval(async () => {
-        if (Math.random() < dificultad.userProb && progress.player < 10) progress.player++;
+        turnos++;
+
+        // Activar Nitro desde la mitad (turno >= 6)
+        if (progress.player >= 5 && !nitroActivo) {
+            nitroActivo = true;
+            turnosDesdeMitad = 3;
+        }
+
+        // Probabilidad total para el jugador
+        let probJugador = dificultad.userProb + bonusConstante;
+        if (nitroActivo && turnosDesdeMitad > 0) {
+            probJugador += nitroBonus;
+            turnosDesdeMitad--;
+        }
+
+        // Limitar a 1.0 (100%)
+        probJugador = Math.min(probJugador, 1);
+
+        // Avances
+        if (Math.random() < probJugador && progress.player < 10) progress.player++;
         if (Math.random() < dificultad.botProb && progress.bot < 10) progress.bot++;
 
+        // Barras
         let bar1 = `[${'='.repeat(progress.player)}${'-'.repeat(10 - progress.player)}] ${progress.player * 10}%`;
         let bar2 = `[${'='.repeat(progress.bot)}${'-'.repeat(10 - progress.bot)}] ${progress.bot * 10}%`;
 
+        // Editar mensaje
         await conn.sendMessage(m.chat, {
             edit: msg.key,
             text: `🏁 Carrera (Nivel ${nivel}) en progreso...\n\nTú: ${bar1}\nBot 🤖: ${bar2}`
         });
 
+        // Fin
         if (progress.player >= 10 || progress.bot >= 10) {
             clearInterval(interval);
-
             const ganaste = progress.player >= 10;
 
             if (ganaste) {
@@ -68,6 +100,7 @@ let handler = async (m, { conn, args }) => {
     }, 1000);
 };
 
+// Sistema de selección de auto (como ya usás)
 async function pedirSeleccion(conn, chatId, userId, opciones) {
     return new Promise(async (resolve) => {
         let textoOpciones = opciones.map(o => `#${o}`).join('\n');
