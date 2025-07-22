@@ -92,19 +92,32 @@ let handler = async (m, { conn }) => {
 
         // Fin de carrera
         if (progreso[m.sender] >= 10 || progreso[target] >= 10) {
-            clearInterval(interval);
+    clearInterval(interval);
 
-            let winner = progreso[m.sender] >= 10 ? m.sender : target;
-            let loser = winner === m.sender ? target : m.sender;
-            let autoGanador = winner === m.sender ? auto1 : auto2;
+    let empate = false;
+    let ganador;
 
-            global.db.data.users[winner].coin += 100;
-            global.db.data.users[loser].coin = Math.max(0, global.db.data.users[loser].coin - 50);
+    if (progreso[m.sender] >= 10 && progreso[target] >= 10) {
+        // Empate: ganador aleatorio
+        empate = true;
+        ganador = Math.random() < 0.5 ? m.sender : target;
+    } else {
+        ganador = progreso[m.sender] >= 10 ? m.sender : target;
+    }
 
-            await conn.sendMessage(m.chat, {
-                text: `🏆 ¡@${winner.split('@')[0]} gana la carrera con su *${autoGanador}*!`,
-                mentions: [winner]
-            });
+    const perdedor = ganador === m.sender ? target : m.sender;
+    const autoGanador = ganador === m.sender ? auto1 : auto2;
+
+    global.db.data.users[ganador].coin += 100;
+    global.db.data.users[perdedor].coin = Math.max(0, global.db.data.users[perdedor].coin - 50);
+
+    let textoFinal = `🏆 ¡@${ganador.split('@')[0]} gana la carrera con su *${autoGanador}*!`;
+    if (empate) textoFinal += `\n🟰 *Empate detectado*: el ganador fue elegido al azar.`;
+
+    await conn.sendMessage(m.chat, {
+        text: textoFinal,
+        mentions: [ganador]
+    });
         }
     }, 1000);
 };
