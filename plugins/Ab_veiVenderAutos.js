@@ -22,7 +22,7 @@ let handler = async (m, { conn }) => {
     resolve: async (seleccion) => {
       const usos = user[seleccion];
       const porcentaje = usos / 100000;
-      const precioBase = 19000;
+      const precioBase = 27500;
       let valorBase = Math.round(porcentaje * precioBase);
 
       // Obtener niveles de mejoras
