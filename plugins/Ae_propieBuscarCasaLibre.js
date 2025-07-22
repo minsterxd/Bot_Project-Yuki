@@ -55,7 +55,7 @@ let handler = async (m, { conn, args }) => {
 
 handler.help = ['buscarcasalibre <tipo>'];
 handler.tags = ['propiedades'];
-handler.command = /^buscarcasalibre$/i;
+handler.command = ['buscarcasalibre'];
 handler.group = true;
 
 export default handler;
