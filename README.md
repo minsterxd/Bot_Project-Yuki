@@ -25,13 +25,14 @@
   > Ahora es posible el poder comprar vehículos con la moneda de la bot (Yenes), se puede ver la información acerca de los vehículos y también se puede hacer drifting, entre otras cosas más.
 - Se rehízo el comando de #ytmp3 (tambien el comando #ytmp4).
   > El comando anteriormente presentaba fallas, y se rehízo desde cero.
+- Se añadio #transferxp.
+  > No es tan importante, pero existe.
 
 </details>
 
 <details>
  <summary><b> ➮ Cosas que se esperan añadir</b></summary>
 
-- Un comando para poder pasar la experiencia de un usuario a otro, similar al #transfer pero para XP.
 - Sistema de viviendas y propiedades.
 - Un sistema de reinos al estilo RPG.
 
