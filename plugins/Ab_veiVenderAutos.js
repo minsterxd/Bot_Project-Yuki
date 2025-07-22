@@ -23,7 +23,19 @@ let handler = async (m, { conn }) => {
       const usos = user[seleccion];
       const porcentaje = usos / 100000;
       const precioBase = 19000;
-      const valor = Math.round(porcentaje * precioBase);
+      let valorBase = Math.round(porcentaje * precioBase);
+
+      // Obtener niveles de mejoras
+      const motor = user[`${seleccion}Motor`] || 0;
+      const agarre = user[`${seleccion}Agarre`] || 0;
+      const turbo = user[`${seleccion}Turbo`] || 0;
+      const nitro = user[`${seleccion}Nitro`] || 0;
+
+      // Valor de cada mejora (ajustable)
+      const valorMejoras = (motor * 500) + (agarre * 500) + (turbo * 250) + (nitro * 1000);
+
+      // Total
+      const valor = valorBase + valorMejoras;
 
       // Guardar oferta
       global.ventaAutos = global.ventaAutos || {};
