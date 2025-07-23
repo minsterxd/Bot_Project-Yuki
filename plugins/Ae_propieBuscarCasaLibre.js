@@ -57,5 +57,6 @@ handler.help = ['buscarcasalibre <tipo>'];
 handler.tags = ['propiedades'];
 handler.command = ['buscarcasalibre'];
 handler.group = true;
+handler.register = true;
 
 export default handler;
