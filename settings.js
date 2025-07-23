@@ -61,8 +61,8 @@ global.gp1 = ''
 global.comunidad1 = ''
 global.channel = ''
 global.channel2 = ''
-global.md = ''
-global.correo = 'thekingdestroy507@gmail.com'
+global.md = 'wa.me/5493743598594'
+global.correo = 'minsterxd@gmail.com'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
