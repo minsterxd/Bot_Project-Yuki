@@ -47,5 +47,6 @@ handler.help = ['comprarcasa <id>'];
 handler.tags = ['propiedades'];
 handler.command = ['comprarcasa'];
 handler.group = true;
+handler.register = true;
 
 export default handler;
