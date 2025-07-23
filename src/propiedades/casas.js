@@ -4,7 +4,7 @@ const casasDisponibles = [
     tipo: 'pequeña',
     color: 'rojo',
     capacidad: 5,
-    imagen: './src/casas/Casa_Pequeña_1.jpg'
+    imagen: './src/casas/Casa_Pequeña_1.jpg',
     precio: 5000,
   },
   {
@@ -12,7 +12,7 @@ const casasDisponibles = [
     tipo: 'pequeña',
     color: 'azul',
     capacidad: 5,
-    imagen: './src/casas/Casa_Pequeña_2.jpg'
+    imagen: './src/casas/Casa_Pequeña_2.jpg',
     precio: 5000, 
   },
   {
@@ -20,7 +20,7 @@ const casasDisponibles = [
     tipo: 'edificiopequeño',
     color: 'gris',
     capacidad: 10,
-    imagen: './src/casas/Edificio_Pequeño_1.jpg'
+    imagen: './src/casas/Edificio_Pequeño_1.jpg',
     precio: 10000,
   },
   {
@@ -28,7 +28,7 @@ const casasDisponibles = [
     tipo: 'mansion',
     color: 'negro',
     capacidad: 200,
-    imagen: './src/casas/Mansion_1.jpg'
+    imagen: './src/casas/Mansion_1.jpg',
     precio: 50000,
   }
 ];
