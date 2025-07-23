@@ -89,5 +89,6 @@ handler.help = ['mejoras', 'mejoras <auto> <mejora>'];
 handler.tags = ['autos', 'mejoras'];
 handler.command = ['mejoras'];
 handler.group = true;
+handler.register = true;
 
 export default handler;
