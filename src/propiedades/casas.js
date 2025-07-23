@@ -29,7 +29,7 @@ const casasDisponibles = [
     color: 'negro',
     capacidad: 200,
     imagen: './src/casas/Mansion_1.jpg'
-    precio: 50000
+    precio: 50000,
   }
 ];
 
