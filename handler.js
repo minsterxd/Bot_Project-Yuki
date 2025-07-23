@@ -68,7 +68,7 @@ user.lamboavesvjNitro = 0
 if (!isNumber(user.exp))
 user.exp = 0
 if (!isNumber(user.coin))
-user.coin = 100000
+user.coin = 49700
 if (!isNumber(user.joincount))
 user.joincount = 1
 if (!isNumber(user.diamond))
@@ -140,7 +140,7 @@ user.warn = 0
 } else
 global.db.data.users[m.sender] = {
 exp: 0,
-coin: 100000,
+coin: 49700,
 mclaren720s: 0,
 mclaren720sMotor: 0,
 mclaren720sAgarre: 0,
