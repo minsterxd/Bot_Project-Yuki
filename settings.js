@@ -42,9 +42,9 @@ global.yukiJadibts = true
 global.packname = '⪛✰ 𝐘𝐮𝐤𝐢-𝐒𝐮𝐨𝐮-𝐁𝐨𝐭 ✰⪜'
 global.botname = 'ᥡᥙkі sᥙ᥆ᥙ'
 global.wm = '✿◟Yυƙι Sυσυ◞✿'
-global.author = '© mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴍɪɴꜱᴛᴇʀxᴅ'
+global.author = '© mᥲძᥱ ᑲᥡ ᴍɪɴꜱᴛᴇʀxᴅ'
 global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ ᴍɪɴꜱᴛᴇʀxᴅ'
-global.textbot = 'Yuki, mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴍɪɴꜱᴛᴇʀxᴅ'
+global.textbot = 'Yuki, mᥲძᥱ ᑲᥡ ᴍɪɴꜱᴛᴇʀxᴅ'
 global.etiqueta = 'ᴍɪɴꜱᴛᴇʀxᴅ'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
