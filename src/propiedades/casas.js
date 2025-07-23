@@ -1,7 +1,7 @@
 const casasDisponibles = [
   {
     id: 'casa1',
-    tipo: 'Casa pequeña',
+    tipo: 'pequeña', // antes: 'Casa pequeña'
     libre: true,
     color: 'rojo',
     capacidad: 5,
@@ -9,7 +9,7 @@ const casasDisponibles = [
   },
   {
     id: 'casa2',
-    tipo: 'Casa pequeña',
+    tipo: 'pequeña',
     libre: true,
     color: 'azul',
     capacidad: 5,
@@ -17,7 +17,7 @@ const casasDisponibles = [
   },
   {
     id: 'edificio1',
-    tipo: 'Edificio pequeño',
+    tipo: 'edificiopequeño', // antes: 'Edificio pequeño'
     libre: true,
     color: 'gris',
     capacidad: 10,
@@ -25,13 +25,10 @@ const casasDisponibles = [
   },
   {
     id: 'mansion1',
-    tipo: 'Mansión',
+    tipo: 'mansion', // antes: 'Mansión'
     libre: true,
     color: 'negro',
     capacidad: 200,
     imagen: './src/casas/Mansion_1.jpg'
   }
-  // Puedes agregar más casas aquí...
 ];
-
-export default casasDisponibles;
