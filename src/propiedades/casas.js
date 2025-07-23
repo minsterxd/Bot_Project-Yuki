@@ -5,6 +5,7 @@ const casasDisponibles = [
     color: 'rojo',
     capacidad: 5,
     imagen: './src/casas/Casa_Pequeña_1.jpg'
+    precio: 5000,
   },
   {
     id: 'casa2',
@@ -12,6 +13,7 @@ const casasDisponibles = [
     color: 'azul',
     capacidad: 5,
     imagen: './src/casas/Casa_Pequeña_2.jpg'
+    precio: 5000, 
   },
   {
     id: 'edificio1',
@@ -19,6 +21,7 @@ const casasDisponibles = [
     color: 'gris',
     capacidad: 10,
     imagen: './src/casas/Edificio_Pequeño_1.jpg'
+    precio: 10000,
   },
   {
     id: 'mansion1',
@@ -26,6 +29,7 @@ const casasDisponibles = [
     color: 'negro',
     capacidad: 200,
     imagen: './src/casas/Mansion_1.jpg'
+    precio: 50000
   }
 ];
 
