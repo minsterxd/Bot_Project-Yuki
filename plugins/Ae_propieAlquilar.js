@@ -18,10 +18,6 @@ let handler = async (m, { conn, args }) => {
     return conn.reply(m.chat, '🚫 No se encontró una casa con ese ID.', m);
   }
 
-  if (!casa.publicada) {
-    return conn.reply(m.chat, '🚫 Esa casa no está disponible para alquilar actualmente.', m);
-  }
-
   if (!casa.dueño) {
     return conn.reply(m.chat, '⚠️ Esa casa no tiene dueño aún, no puedes alquilarla.', m);
   }
@@ -35,7 +31,7 @@ let handler = async (m, { conn, args }) => {
   // Verificar espacio
   const capacidadMaxima = casa.capacidad;
   const cantidadOcupada = casa.inquilinos.length;
-  const espacioDisponible = capacidadMaxima - 1; // 1 espacio para el dueño
+  const espacioDisponible = capacidadMaxima - 1; // 1 espacio reservado para el dueño
 
   if (cantidadOcupada >= espacioDisponible) {
     return conn.reply(m.chat, '🚷 Esta casa ya está llena y no acepta más inquilinos.', m);
