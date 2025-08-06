@@ -59,11 +59,14 @@ async function handlerChat(m) {
     /\byuki\b/,
   ]
 
-  const botJid = conn?.user?.id?.split(':')[0] || conn?.user?.jid
-  const respondeABot =
-    m.quoted &&
-    m.quoted.sender &&
-    (m.quoted.sender.includes(botJid) || m.quoted?.participant?.includes(botJid))
+  const botJid = conn?.user?.id?.split(':')[0] || conn?.user?.jid || ''
+const respondeABot =
+  m.quoted &&
+  (
+    m.quoted.sender === botJid ||
+    m.quoted.participant === botJid ||
+    (m.quoted.id && m.quoted.id.includes(botJid))
+  )
 
   const debeResponder = patrones.some(rx => rx.test(textoLower)) || mencionanBot || respondeABot
 
