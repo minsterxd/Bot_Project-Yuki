@@ -33,25 +33,31 @@ async function handlerChat(m) {
   tiempoUltimoMensaje[chatId] = tiempoUltimoMensaje[chatId] || ahora
 
   mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
+
+  const tiempoInactivo = ahora - tiempoUltimoMensaje[chatId]
   tiempoUltimoMensaje[chatId] = ahora
 
   // Ver si se debe hacer resumen
-  if (
-    mensajesChat[chatId].length >= MAX_MENSAJES ||
-    ahora - tiempoUltimoMensaje[chatId] >= UMBRAL_INACTIVIDAD
-  ) {
+  if (mensajesChat[chatId].length >= MAX_MENSAJES || tiempoInactivo >= UMBRAL_INACTIVIDAD) {
     await hacerResumen(chatId, mensajesChat[chatId])
     mensajesChat[chatId] = []
   }
 
-  // Ver si debe responder (ej: si la mencionan)
-  const nombreBot = global.botname?.toLowerCase() || 'yuki'
+  // === 🧠 Disparadores naturales para que Yuki responda sin comando ===
   const textoLower = texto.toLowerCase()
-  if (
-    textoLower.includes(nombreBot) ||
-    textoLower.includes('recuerdas') ||
-    textoLower.includes('te acuerdas')
-  ) {
+  const nombreBot = (global.botname || 'yuki').toLowerCase()
+  const mencionanABot = textoLower.includes(nombreBot)
+
+  const patrones = [
+    /recuerdas\b/,
+    /te acuerdas\b/,
+    /recordás\b/,
+    /\byuki\b/,
+  ]
+
+  const debeResponder = patrones.some(rx => rx.test(textoLower)) || mencionanABot
+
+  if (debeResponder) {
     const recuerdo = buscarRecuerdo(chatId, textoLower)
     const respuesta = await responderConIA(texto, recuerdo)
     if (respuesta) {
@@ -98,14 +104,18 @@ function extraerPalabrasClave(texto) {
 }
 
 async function pedirAIA(prompt) {
-  // Puedes reemplazar esto con OpenAI si tienes clave, aquí usa Luminai como en tu código:
-  const res = await axios.post("https://Luminai.my.id", {
-    content: prompt,
-    user: "grupo-global",
-    prompt: prompt,
-    webSearchMode: false
-  })
-  return res.data?.result || "No tengo idea."
+  try {
+    const res = await axios.post("https://Luminai.my.id", {
+      content: prompt,
+      user: "grupo-global",
+      prompt: prompt,
+      webSearchMode: false
+    })
+    return res.data?.result || "No tengo idea."
+  } catch (e) {
+    console.error("❌ Error al consultar IA:", e)
+    return "Hubo un problema al intentar pensar eso."
+  }
 }
 
 async function responderConIA(texto, recuerdo) {
