@@ -38,6 +38,7 @@ async function handlerChat(m) {
 
   mensajesChat[chatId] = mensajesChat[chatId] || []
   tiempoUltimoMensaje[chatId] = tiempoUltimoMensaje[chatId] || ahora
+
   mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
   tiempoUltimoMensaje[chatId] = ahora
 
@@ -46,41 +47,16 @@ async function handlerChat(m) {
     mensajesChat[chatId] = []
   }
 
-  const textoLower = texto.toLowerCase()
-  const nombreBot = (global.botname || 'yuki').toLowerCase()
-  const mencionanBot = textoLower.includes(nombreBot)
+  const recuerdo = buscarRecuerdo(chatId, texto.toLowerCase())
+  const contextoReciente = mensajesChat[chatId]
+    .slice(-6) // últimos 6 mensajes
+    .map(m => `• ${m.usuario}: ${m.texto}`)
+    .join('\n')
 
-  const patrones = [
-    /recuerdas\b/,
-    /te acuerdas\b/,
-    /recordás\b/,
-    /\byuki\b/,
-  ]
+  const decision = await decidirResponder(texto, contextoReciente, recuerdo)
 
-  const botJid = conn?.user?.id?.split(':')[0] || conn?.user?.jid || ''
-  const respondeABot =
-    m.quoted &&
-    (
-      m.quoted.sender === botJid ||
-      m.quoted.participant === botJid ||
-      (m.quoted.id && m.quoted.id.includes(botJid))
-    )
-
-  const debeResponderPorRegla = patrones.some(rx => rx.test(textoLower)) || mencionanBot || respondeABot
-
-  const recuerdo = buscarRecuerdo(chatId, textoLower)
-  const contexto = mensajesChat[chatId].slice(-10).map(m => `- ${m.usuario}: ${m.texto}`).join('\n')
-
-  const decision = await decidirParticipacion(texto, contexto, recuerdo)
-
-  const debeResponder = decision?.responder || debeResponderPorRegla
-
-  if (debeResponder && decision?.respuestas?.length) {
-    for (let i = 0; i < decision.respuestas.length; i++) {
-      const quotedOption = i === 0 ? { quoted: m } : {}
-      await conn.sendMessage(chatId, { text: decision.respuestas[i] }, quotedOption)
-      await new Promise(res => setTimeout(res, 600))
-    }
+  if (decision.responder && decision.respuesta) {
+    await conn.sendMessage(chatId, { text: decision.respuesta }, { quoted: m })
   }
 }
 
@@ -136,34 +112,39 @@ async function pedirAIA(prompt) {
   }
 }
 
-async function decidirParticipacion(mensaje, contexto, recuerdo) {
+async function decidirResponder(texto, contexto, recuerdo) {
   const prompt = `
-Eres Yuki, una bot joven e informal que forma parte de un grupo de WhatsApp. Observas las conversaciones y decides si vale la pena intervenir o no. No interrumpes si otros están hablando entre sí, pero respondes si alguien se dirige a todos o a ti.
+Eres Yuki, una bot joven y divertida en un grupo de WhatsApp. Observas la conversación para decidir si quieres participar, pero solo intervienes si es natural hacerlo.
 
-Últimos mensajes recientes:
+Este es el último mensaje recibido:
+"${texto}"
+
+Últimos mensajes del grupo:
 ${contexto}
 
-Mensaje actual:
-"${mensaje}"
+Recuerdo relevante: "${recuerdo || 'No hay recuerdo relevante'}"
 
-Recuerdo relevante:
-"${recuerdo || 'No hay recuerdo relevante'}"
-
-¿Deberías participar en esta conversación? Si sí, responde de forma casual, breve y con máximo 1 emoji si quieres. Divide tu respuesta en 1 a 5 frases si es necesario.
-
-Responde en formato JSON válido como este:
+¿Deberías responder? Si sí, responde con un JSON como este:
 {
   "responder": true,
-  "respuestas": ["Hola! Qué bueno que estés bien", "¿Qué hicieron hoy?"]
+  "respuesta": "Tu respuesta aquí"
 }
-`
+
+Si no deberías decir nada, responde:
+{
+  "responder": false
+}`
 
   try {
-    const respuesta = await pedirAIA(prompt)
-    const data = JSON.parse(respuesta)
-    return data
+    const raw = await pedirAIA(prompt)
+    const parsed = JSON.parse(raw)
+    return parsed
   } catch (e) {
-    console.error('❌ Error al decidir participación:', e)
-    return { responder: false, respuestas: [] }
+    console.error("⚠️ Error al decidir si responder:", e)
+    return { responder: false }
   }
+}
+
+export default {
+  all: handlerChat
 }
