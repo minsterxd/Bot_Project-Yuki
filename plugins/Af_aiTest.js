@@ -16,7 +16,6 @@ const MAX_MENSAJES = 50
 let mensajesChat = {}
 let tiempoUltimoMensaje = {}
 
-// Timer automático para resumir inactividad real
 setInterval(async () => {
   const ahora = Date.now()
   for (const chatId in mensajesChat) {
@@ -26,7 +25,7 @@ setInterval(async () => {
       mensajesChat[chatId] = []
     }
   }
-}, 60 * 1000) // Cada minuto se evalúa si toca resumir
+}, 60 * 1000)
 
 async function handlerChat(m) {
   const conn = m.conn
@@ -39,7 +38,6 @@ async function handlerChat(m) {
 
   mensajesChat[chatId] = mensajesChat[chatId] || []
   tiempoUltimoMensaje[chatId] = tiempoUltimoMensaje[chatId] || ahora
-
   mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
   tiempoUltimoMensaje[chatId] = ahora
 
@@ -60,24 +58,28 @@ async function handlerChat(m) {
   ]
 
   const botJid = conn?.user?.id?.split(':')[0] || conn?.user?.jid || ''
-const respondeABot =
-  m.quoted &&
-  (
-    m.quoted.sender === botJid ||
-    m.quoted.participant === botJid ||
-    (m.quoted.id && m.quoted.id.includes(botJid))
-  )
+  const respondeABot =
+    m.quoted &&
+    (
+      m.quoted.sender === botJid ||
+      m.quoted.participant === botJid ||
+      (m.quoted.id && m.quoted.id.includes(botJid))
+    )
 
-  const debeResponder = patrones.some(rx => rx.test(textoLower)) || mencionanBot || respondeABot
+  const debeResponderPorRegla = patrones.some(rx => rx.test(textoLower)) || mencionanBot || respondeABot
 
-  if (debeResponder) {
-    const recuerdo = buscarRecuerdo(chatId, textoLower)
-    const respuestas = await responderConIA(texto, recuerdo)
+  const recuerdo = buscarRecuerdo(chatId, textoLower)
+  const contexto = mensajesChat[chatId].slice(-10).map(m => `- ${m.usuario}: ${m.texto}`).join('\n')
 
-    for (let i = 0; i < respuestas.length; i++) {
-      const quotedOption = i === 0 ? { quoted: m } : {} // Solo el primer mensaje responde al mensaje original
-      await conn.sendMessage(chatId, { text: respuestas[i] }, quotedOption)
-      await new Promise(res => setTimeout(res, 600)) // Pausa entre mensajes
+  const decision = await decidirParticipacion(texto, contexto, recuerdo)
+
+  const debeResponder = decision?.responder || debeResponderPorRegla
+
+  if (debeResponder && decision?.respuestas?.length) {
+    for (let i = 0; i < decision.respuestas.length; i++) {
+      const quotedOption = i === 0 ? { quoted: m } : {}
+      await conn.sendMessage(chatId, { text: decision.respuestas[i] }, quotedOption)
+      await new Promise(res => setTimeout(res, 600))
     }
   }
 }
@@ -134,32 +136,34 @@ async function pedirAIA(prompt) {
   }
 }
 
-async function responderConIA(texto, recuerdo) {
+async function decidirParticipacion(mensaje, contexto, recuerdo) {
   const prompt = `
-Tú eres una bot llamada Yuki. Eres joven, divertida, informal y hablas como una persona común. Responde con frases cortas y sin usar muchos emojis (usa como máximo 1 ocasionalmente).
+Eres Yuki, una bot joven e informal que forma parte de un grupo de WhatsApp. Observas las conversaciones y decides si vale la pena intervenir o no. No interrumpes si otros están hablando entre sí, pero respondes si alguien se dirige a todos o a ti.
 
-Este es el mensaje recibido:
-"${texto}"
+Últimos mensajes recientes:
+${contexto}
 
-Recuerdo relevante: "${recuerdo || 'No hay recuerdo relevante'}"
+Mensaje actual:
+"${mensaje}"
 
-Responde como si estuvieras en una conversación de WhatsApp normal. Si corresponde, puedes dividir tu respuesta en frases separadas (máximo 5), como si fueran mensajes enviados uno a uno. Pero en general responde con 1 o 2 frases solamente.`
-  const respuestaLarga = await pedirAIA(prompt)
+Recuerdo relevante:
+"${recuerdo || 'No hay recuerdo relevante'}"
 
-  let frases = respuestaLarga
-    .split(/(?<=[.?!])\s+/) // Dividir por oración
-    .map(f => f.trim())
-    .filter(f => f.length > 0)
+¿Deberías participar en esta conversación? Si sí, responde de forma casual, breve y con máximo 1 emoji si quieres. Divide tu respuesta en 1 a 5 frases si es necesario.
 
-  // Limitar preferentemente a 1-2 frases, máximo 5
-  if (frases.length > 2) {
-    const cantidad = Math.min(frases.length, 5)
-    frases = frases.slice(0, cantidad)
-  }
-
-  return frases
+Responde en formato JSON válido como este:
+{
+  "responder": true,
+  "respuestas": ["Hola! Qué bueno que estés bien", "¿Qué hicieron hoy?"]
 }
+`
 
-export default {
-  all: handlerChat
+  try {
+    const respuesta = await pedirAIA(prompt)
+    const data = JSON.parse(respuesta)
+    return data
+  } catch (e) {
+    console.error('❌ Error al decidir participación:', e)
+    return { responder: false, respuestas: [] }
+  }
 }
