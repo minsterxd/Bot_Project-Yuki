@@ -4,7 +4,6 @@ import axios from 'axios'
 let memoriaPath = './memoria.json'
 let memoria = {}
 
-// Cargar memoria al inicio
 try {
   memoria = JSON.parse(await fs.readFile(memoriaPath))
 } catch {
@@ -17,25 +16,34 @@ const MAX_MENSAJES = 50
 let mensajesChat = {}
 let tiempoUltimoMensaje = {}
 
+// Timer automático para resumir inactividad real
+setInterval(async () => {
+  const ahora = Date.now()
+  for (const chatId in mensajesChat) {
+    const tiempo = tiempoUltimoMensaje[chatId] || 0
+    if (mensajesChat[chatId]?.length > 0 && ahora - tiempo >= UMBRAL_INACTIVIDAD) {
+      await hacerResumen(chatId, mensajesChat[chatId])
+      mensajesChat[chatId] = []
+    }
+  }
+}, 60 * 1000) // Cada minuto se evalúa si toca resumir
+
 async function handlerChat(m) {
   const conn = m.conn
-  if (!m.message || m.key.fromMe || m.isGroup !== true) return
+  if (!m.message || m.key.fromMe || !m.isGroup) return
 
   const chatId = m.chat
   const texto = m.text || m.message.conversation || ''
   const usuario = m.sender
   const ahora = Date.now()
 
-  // Inicializar buffers
   mensajesChat[chatId] = mensajesChat[chatId] || []
   tiempoUltimoMensaje[chatId] = tiempoUltimoMensaje[chatId] || ahora
 
   mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
-  const tiempoInactivo = ahora - tiempoUltimoMensaje[chatId]
   tiempoUltimoMensaje[chatId] = ahora
 
-  // Resumir si toca
-  if (mensajesChat[chatId].length >= MAX_MENSAJES || tiempoInactivo >= UMBRAL_INACTIVIDAD) {
+  if (mensajesChat[chatId].length >= MAX_MENSAJES) {
     await hacerResumen(chatId, mensajesChat[chatId])
     mensajesChat[chatId] = []
   }
@@ -51,19 +59,22 @@ async function handlerChat(m) {
     /\byuki\b/,
   ]
 
-  const respondeABot = m.quoted && m.quoted.sender && m.quoted.sender.endsWith('@s.whatsapp.net') &&
-    m.quoted.sender.includes(global.conn?.user?.split(':')[0])
+  const botJid = conn?.user?.id?.split(':')[0] || conn?.user?.jid
+  const respondeABot =
+    m.quoted &&
+    m.quoted.sender &&
+    (m.quoted.sender.includes(botJid) || m.quoted?.participant?.includes(botJid))
 
   const debeResponder = patrones.some(rx => rx.test(textoLower)) || mencionanBot || respondeABot
 
   if (debeResponder) {
     const recuerdo = buscarRecuerdo(chatId, textoLower)
     const respuestas = await responderConIA(texto, recuerdo)
-    if (respuestas.length > 0) {
-      for (const r of respuestas) {
-        await conn.sendMessage(chatId, { text: r }, { quoted: m })
-        await new Promise(res => setTimeout(res, 600)) // Espera corta entre mensajes
-      }
+
+    for (let i = 0; i < respuestas.length; i++) {
+      const quotedOption = i === 0 ? { quoted: m } : {} // Solo el primer mensaje responde al mensaje original
+      await conn.sendMessage(chatId, { text: respuestas[i] }, quotedOption)
+      await new Promise(res => setTimeout(res, 600)) // Pausa entre mensajes
     }
   }
 }
@@ -129,21 +140,25 @@ Este es el mensaje recibido:
 
 Recuerdo relevante: "${recuerdo || 'No hay recuerdo relevante'}"
 
-Responde como si estuvieras en una conversación de WhatsApp normal. Si corresponde, puedes dividir tu respuesta en varias frases cortas (máximo 5), como si fueran mensajes enviados por separado.
-`
-
+Responde como si estuvieras en una conversación de WhatsApp normal. Si corresponde, puedes dividir tu respuesta en frases separadas (máximo 5), como si fueran mensajes enviados uno a uno. Pero en general responde con 1 o 2 frases solamente.`
   const respuestaLarga = await pedirAIA(prompt)
 
-  // Dividir la respuesta en frases (máximo 5)
   let frases = respuestaLarga
-    .split(/(?<=[.?!])\s+/) // Separar por oraciones
+    .split(/(?<=[.?!])\s+/) // Dividir por oración
     .map(f => f.trim())
     .filter(f => f.length > 0)
-    .slice(0, 5) // Limitar a 5 respuestas
+
+  // Limitar preferentemente a 1-2 frases, máximo 5
+  if (frases.length > 2) {
+    const cantidad = Math.min(frases.length, 5)
+    frases = frases.slice(0, cantidad)
+  }
 
   return frases
 }
 
 export default {
+  all: handlerChat
+}export default {
   all: handlerChat
 }
