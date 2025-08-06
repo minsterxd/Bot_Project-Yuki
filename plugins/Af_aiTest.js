@@ -1,5 +1,4 @@
 import fs from 'fs/promises'
-import { createHash } from 'crypto'
 import axios from 'axios'
 
 let memoriaPath = './memoria.json'
@@ -15,7 +14,6 @@ try {
 
 const UMBRAL_INACTIVIDAD = 2 * 60 * 1000 // 2 minutos
 const MAX_MENSAJES = 50
-
 let mensajesChat = {}
 let tiempoUltimoMensaje = {}
 
@@ -33,20 +31,18 @@ async function handlerChat(m) {
   tiempoUltimoMensaje[chatId] = tiempoUltimoMensaje[chatId] || ahora
 
   mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
-
   const tiempoInactivo = ahora - tiempoUltimoMensaje[chatId]
   tiempoUltimoMensaje[chatId] = ahora
 
-  // Ver si se debe hacer resumen
+  // Resumir si toca
   if (mensajesChat[chatId].length >= MAX_MENSAJES || tiempoInactivo >= UMBRAL_INACTIVIDAD) {
     await hacerResumen(chatId, mensajesChat[chatId])
     mensajesChat[chatId] = []
   }
 
-  // === 🧠 Disparadores naturales para que Yuki responda sin comando ===
   const textoLower = texto.toLowerCase()
   const nombreBot = (global.botname || 'yuki').toLowerCase()
-  const mencionanABot = textoLower.includes(nombreBot)
+  const mencionanBot = textoLower.includes(nombreBot)
 
   const patrones = [
     /recuerdas\b/,
@@ -55,20 +51,26 @@ async function handlerChat(m) {
     /\byuki\b/,
   ]
 
-  const debeResponder = patrones.some(rx => rx.test(textoLower)) || mencionanABot
+  const respondeABot = m.quoted && m.quoted.sender && m.quoted.sender.endsWith('@s.whatsapp.net') &&
+    m.quoted.sender.includes(global.conn?.user?.split(':')[0])
+
+  const debeResponder = patrones.some(rx => rx.test(textoLower)) || mencionanBot || respondeABot
 
   if (debeResponder) {
     const recuerdo = buscarRecuerdo(chatId, textoLower)
-    const respuesta = await responderConIA(texto, recuerdo)
-    if (respuesta) {
-      await conn.sendMessage(chatId, { text: respuesta }, { quoted: m })
+    const respuestas = await responderConIA(texto, recuerdo)
+    if (respuestas.length > 0) {
+      for (const r of respuestas) {
+        await conn.sendMessage(chatId, { text: r }, { quoted: m })
+        await new Promise(res => setTimeout(res, 600)) // Espera corta entre mensajes
+      }
     }
   }
 }
 
 async function hacerResumen(chatId, mensajes) {
   const contenido = mensajes.map(m => m.texto).join('\n')
-  const prompt = `Haz un resumen breve de la siguiente conversación:\n\n${contenido}`
+  const prompt = `Haz un resumen breve (1 párrafo) de la siguiente conversación:\n\n${contenido}`
 
   try {
     const resumen = await pedirAIA(prompt)
@@ -111,24 +113,35 @@ async function pedirAIA(prompt) {
       prompt: prompt,
       webSearchMode: false
     })
-    return res.data?.result || "No tengo idea."
+    return res.data?.result || "No estoy segura de eso."
   } catch (e) {
     console.error("❌ Error al consultar IA:", e)
-    return "Hubo un problema al intentar pensar eso."
+    return "Algo salió mal con la respuesta."
   }
 }
 
 async function responderConIA(texto, recuerdo) {
-  const prompt = `Tú eres una bot llamada Yuki. Eres divertida, amable y curiosa. Estás en un grupo de WhatsApp.
+  const prompt = `
+Tú eres una bot llamada Yuki. Eres joven, divertida, informal y hablas como una persona común. Responde con frases cortas y sin usar muchos emojis (usa como máximo 1 ocasionalmente).
 
 Este es el mensaje recibido:
 "${texto}"
 
-Este es un recuerdo relevante:
-"${recuerdo || 'No hay recuerdo relevante'}"
+Recuerdo relevante: "${recuerdo || 'No hay recuerdo relevante'}"
 
-Responde de forma natural y amable.`
-  return await pedirAIA(prompt)
+Responde como si estuvieras en una conversación de WhatsApp normal. Si corresponde, puedes dividir tu respuesta en varias frases cortas (máximo 5), como si fueran mensajes enviados por separado.
+`
+
+  const respuestaLarga = await pedirAIA(prompt)
+
+  // Dividir la respuesta en frases (máximo 5)
+  let frases = respuestaLarga
+    .split(/(?<=[.?!])\s+/) // Separar por oraciones
+    .map(f => f.trim())
+    .filter(f => f.length > 0)
+    .slice(0, 5) // Limitar a 5 respuestas
+
+  return frases
 }
 
 export default {
