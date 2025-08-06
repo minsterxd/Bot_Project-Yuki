@@ -19,7 +19,8 @@ const MAX_MENSAJES = 50
 let mensajesChat = {}
 let tiempoUltimoMensaje = {}
 
-async function handlerChat(m, { conn }) {
+async function handlerChat(m) {
+  const conn = m.conn
   if (!m.message || m.key.fromMe || m.isGroup !== true) return
 
   const chatId = m.chat
@@ -122,4 +123,4 @@ Responde de forma natural y amable.`
 
 export default {
   all: handlerChat
-      }
+}
