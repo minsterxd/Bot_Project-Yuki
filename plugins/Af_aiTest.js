@@ -159,6 +159,4 @@ Responde como si estuvieras en una conversación de WhatsApp normal. Si correspo
 
 export default {
   all: handlerChat
-}export default {
-  all: handlerChat
 }
