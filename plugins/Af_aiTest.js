@@ -147,16 +147,24 @@ function extraerPalabrasClave(texto) {
 
 async function pedirAIA(prompt) {
   try {
-    const res = await axios.post("https://Luminai.my.id", {
-      content: prompt,
-      user: "grupo-global",
-      prompt: prompt,
-      webSearchMode: false
-    })
-    return res.data?.result || "No estoy segura de eso."
+    const res = await axios.post(
+      'https://api.deepseek.com/v1/chat/completions',
+      {
+        model: 'deepseek-chat', // o 'deepseek-reasoner'
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 512
+      },
+      {
+        headers: {
+          Authorization: 'Bearer TU_DEEPSEEK_API_KEY',
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    return res.data.choices[0].message.content.trim()
   } catch (e) {
-    console.error("❌ Error al consultar IA:", e)
-    return "Algo salió mal con la respuesta."
+    console.error('❌ Error al consultar DeepSeek:', e)
+    return 'Ups, algo salió mal con DeepSeek.'
   }
 }
 
