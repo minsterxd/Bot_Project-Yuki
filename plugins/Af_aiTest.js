@@ -11,7 +11,7 @@ try {
   await fs.writeFile(memoriaPath, JSON.stringify(memoria, null, 2))
 }
 
-const UMBRAL_INACTIVIDAD = 2 * 60 * 1000 // 2 minutos
+const UMBRAL_INACTIVIDAD = 2 * 60 * 1000
 const MAX_MENSAJES = 50
 let mensajesChat = {}
 let tiempoUltimoMensaje = {}
@@ -42,38 +42,34 @@ async function handlerChat(m) {
   mensajesChat[chatId] = mensajesChat[chatId] || []
   tiempoUltimoMensaje[chatId] = ahora
 
-  // Guardar mensaje globalmente para resumen
   mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
 
-  // Guardar mensaje por usuario para análisis posterior
   mensajesPendientes[chatId] = mensajesPendientes[chatId] || {}
   mensajesPendientes[chatId][usuario] = mensajesPendientes[chatId][usuario] || []
   mensajesPendientes[chatId][usuario].push(texto)
 
-  // Cancelar temporizador anterior si existe
   if (temporizadores[chatId]?.[usuario]) {
     clearTimeout(temporizadores[chatId][usuario])
   }
 
-  // Crear nuevo temporizador
   temporizadores[chatId] = temporizadores[chatId] || {}
   temporizadores[chatId][usuario] = setTimeout(async () => {
     const mensajesUsuario = mensajesPendientes[chatId][usuario]
-    delete mensajesPendientes[chatId][usuario] // Limpiar
+    delete mensajesPendientes[chatId][usuario]
 
     const contextoReciente = mensajesChat[chatId]
       .slice(-8)
       .map(m => `• ${m.usuario}: ${m.texto}`)
       .join('\n')
 
-    const recuerdo = buscarRecuerdo(chatId, mensajesUsuario.join(' ').toLowerCase())
+    const recuerdo = buscarRecuerdo(chatId, mensajesUsuario.join(' ').toLowerCase(), usuario)
     const decision = await decidirResponder(mensajesUsuario.join('\n'), contextoReciente, recuerdo)
 
     if (decision.responder && decision.respuesta) {
       await conn.sendMessage(chatId, { text: decision.respuesta })
     }
 
-  }, 15 * 1000) // 15 segundos
+  }, 15 * 1000)
 }
 
 async function hacerResumen(chatId, mensajes) {
@@ -84,12 +80,29 @@ async function hacerResumen(chatId, mensajes) {
     const resumen = await pedirAIA(prompt)
     const palabrasClave = extraerPalabrasClave(resumen)
 
-    memoria[chatId] = memoria[chatId] || []
-    memoria[chatId].push({
+    memoria[chatId] = memoria[chatId] || {}
+    memoria[chatId].recuerdosGlobales = memoria[chatId].recuerdosGlobales || []
+    memoria[chatId].usuarios = memoria[chatId].usuarios || {}
+
+    memoria[chatId].recuerdosGlobales.push({
       resumen,
       palabrasClave,
       timestamp: Date.now()
     })
+
+    const porUsuario = agruparPorUsuario(mensajes)
+    for (const usuarioId in porUsuario) {
+      const textos = porUsuario[usuarioId].map(m => m.texto).join('\n')
+      const resumenU = await pedirAIA(`Resume brevemente lo que dijo este usuario:\n\n${textos}`)
+      const claves = extraerPalabrasClave(resumenU)
+
+      memoria[chatId].usuarios[usuarioId] = memoria[chatId].usuarios[usuarioId] || []
+      memoria[chatId].usuarios[usuarioId].push({
+        resumen: resumenU,
+        palabrasClave: claves,
+        timestamp: Date.now()
+      })
+    }
 
     await fs.writeFile(memoriaPath, JSON.stringify(memoria, null, 2))
   } catch (e) {
@@ -97,16 +110,35 @@ async function hacerResumen(chatId, mensajes) {
   }
 }
 
-function buscarRecuerdo(chatId, texto) {
-  const recuerdos = memoria[chatId] || []
-  const claves = texto.toLowerCase().match(/\b\w{4,}\b/g) || []
+function agruparPorUsuario(mensajes) {
+  const resultado = {}
+  for (const m of mensajes) {
+    resultado[m.usuario] = resultado[m.usuario] || []
+    resultado[m.usuario].push(m)
+  }
+  return resultado
+}
 
-  for (let r of recuerdos.reverse()) {
+function buscarRecuerdo(chatId, texto, usuarioId = null) {
+  const claves = texto.toLowerCase().match(/\b\w{4,}\b/g) || []
+  const grupo = memoria[chatId] || {}
+  const recuerdos = []
+
+  for (const r of (grupo.recuerdosGlobales || []).slice().reverse()) {
     if (claves.some(k => r.palabrasClave.includes(k))) {
-      return r.resumen
+      recuerdos.push(r.resumen)
     }
   }
-  return null
+
+  if (usuarioId && grupo.usuarios?.[usuarioId]) {
+    for (const r of grupo.usuarios[usuarioId].slice().reverse()) {
+      if (claves.some(k => r.palabrasClave.includes(k))) {
+        recuerdos.push(r.resumen)
+      }
+    }
+  }
+
+  return recuerdos.length ? recuerdos.join('\n') : null
 }
 
 function extraerPalabrasClave(texto) {
