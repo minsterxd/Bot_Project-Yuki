@@ -27,37 +27,53 @@ setInterval(async () => {
   }
 }, 60 * 1000)
 
+const mensajesPendientes = {}
+const temporizadores = {}
+
 async function handlerChat(m) {
   const conn = m.conn
   if (!m.message || m.key.fromMe || !m.isGroup) return
 
   const chatId = m.chat
-  const texto = m.text || m.message.conversation || ''
   const usuario = m.sender
+  const texto = m.text || m.message.conversation || ''
   const ahora = Date.now()
 
   mensajesChat[chatId] = mensajesChat[chatId] || []
-  tiempoUltimoMensaje[chatId] = tiempoUltimoMensaje[chatId] || ahora
-
-  mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
   tiempoUltimoMensaje[chatId] = ahora
 
-  if (mensajesChat[chatId].length >= MAX_MENSAJES) {
-    await hacerResumen(chatId, mensajesChat[chatId])
-    mensajesChat[chatId] = []
+  // Guardar mensaje globalmente para resumen
+  mensajesChat[chatId].push({ texto, usuario, timestamp: ahora })
+
+  // Guardar mensaje por usuario para análisis posterior
+  mensajesPendientes[chatId] = mensajesPendientes[chatId] || {}
+  mensajesPendientes[chatId][usuario] = mensajesPendientes[chatId][usuario] || []
+  mensajesPendientes[chatId][usuario].push(texto)
+
+  // Cancelar temporizador anterior si existe
+  if (temporizadores[chatId]?.[usuario]) {
+    clearTimeout(temporizadores[chatId][usuario])
   }
 
-  const recuerdo = buscarRecuerdo(chatId, texto.toLowerCase())
-  const contextoReciente = mensajesChat[chatId]
-    .slice(-6) // últimos 6 mensajes
-    .map(m => `• ${m.usuario}: ${m.texto}`)
-    .join('\n')
+  // Crear nuevo temporizador
+  temporizadores[chatId] = temporizadores[chatId] || {}
+  temporizadores[chatId][usuario] = setTimeout(async () => {
+    const mensajesUsuario = mensajesPendientes[chatId][usuario]
+    delete mensajesPendientes[chatId][usuario] // Limpiar
 
-  const decision = await decidirResponder(texto, contextoReciente, recuerdo)
+    const contextoReciente = mensajesChat[chatId]
+      .slice(-8)
+      .map(m => `• ${m.usuario}: ${m.texto}`)
+      .join('\n')
 
-  if (decision.responder && decision.respuesta) {
-    await conn.sendMessage(chatId, { text: decision.respuesta }, { quoted: m })
-  }
+    const recuerdo = buscarRecuerdo(chatId, mensajesUsuario.join(' ').toLowerCase())
+    const decision = await decidirResponder(mensajesUsuario.join('\n'), contextoReciente, recuerdo)
+
+    if (decision.responder && decision.respuesta) {
+      await conn.sendMessage(chatId, { text: decision.respuesta })
+    }
+
+  }, 15 * 1000) // 15 segundos
 }
 
 async function hacerResumen(chatId, mensajes) {
